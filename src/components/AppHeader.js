@@ -54,15 +54,15 @@ const AppHeader = () => {
         <CHeaderNav className="d-none d-md-flex">
           <CNavItem>
             <CNavLink to="/home" as={NavLink}>
-              Dashboard
+              BAHADIR - POINT OF SALE APP
             </CNavLink>
           </CNavItem>
-          <CNavItem>
-            <CNavLink href="#">Users</CNavLink>
+          {/* <CNavItem>
+            <CNavLink to="/sale">SATIS YAP</CNavLink>
           </CNavItem>
           <CNavItem>
-            <CNavLink href="#">Settings</CNavLink>
-          </CNavItem>
+            <CNavLink to="/sale">AYARLAR</CNavLink>
+          </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav className="ms-auto">
           <CNavItem>
