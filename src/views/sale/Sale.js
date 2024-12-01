@@ -108,17 +108,19 @@ const Sale = () => {
             <CCardBody>
               <div className="product-items">
                 {products.map((product) => (
-                  <div key={product.id} className="product-card">
-                    <CCardBody>
-                      <img src={product.imageUrl} alt={product.name} className="product-image" />
-                      <div className="product-info">
-                        <div className="product-name">{product.name}</div>
-                        <div className="product-price">{product.price.toLocaleString()} TL</div>
-                        <button className="add-to-cart" onClick={() => handleAddToCart(product)}>
-                          Sepete Ekle
-                        </button>
-                      </div>
-                    </CCardBody>
+                  <div
+                    key={product.id}
+                    className="product-card"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    <img src={product.imageUrl} alt={product.name} className="product-image" />
+                    <div className="product-info">
+                      <div className="product-name">{product.name}</div>
+                      <div className="product-price">{product.price.toLocaleString()} TL</div>
+                    </div>
+                    <div className="add-to-cart-overlay">
+                      <button className="add-to-cart">Sepete Ekle</button>
+                    </div>
                   </div>
                 ))}
               </div>
