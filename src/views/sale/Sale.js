@@ -132,7 +132,7 @@ const Sale = () => {
   const { subTotal, tax, total } = calculateTotal()
 
   return (
-    <CContainer>
+    <CContainer fluid>
       <CRow>
         <CCol sm="8">
           <CCard>

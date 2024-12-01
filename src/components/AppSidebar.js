@@ -14,6 +14,7 @@ const AppSidebar = () => {
 
   return (
     <CSidebar
+      size="sm"
       className="border-end"
       colorScheme="dark"
       position="fixed"
