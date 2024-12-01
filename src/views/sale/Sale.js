@@ -84,7 +84,7 @@ const Sale = () => {
 
   const calculateTotal = () => {
     const subTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0)
-    const tax = 0
+    const tax = subTotal / 10
     return { subTotal, tax, total: subTotal + tax }
   }
 
@@ -92,20 +92,7 @@ const Sale = () => {
 
   return (
     <CContainer>
-      {/* <CRow>
-        <CCard>
-          <CCardHeader>URUN KATEGORILERI</CCardHeader>
-          <CCardBody>Kategoriler gelecek</CCardBody>
-        </CCard>
-      </CRow> */}
       <CRow>
-        {/* <CCol sm="2">
-          <CCard>
-            <CCardHeader>Kategoriler</CCardHeader>
-            <CCardBody>Kategoriler gelecek</CCardBody>
-          </CCard>
-        </CCol> */}
-
         <CCol sm="8">
           <CCard>
             <CCardHeader>Ürünler</CCardHeader>
@@ -187,9 +174,23 @@ const Sale = () => {
                   {total.toFixed(2)} TL
                 </CCol>
               </CRow>
-              <CButton color="primary" className="w-100 mt-3" disabled={cart.length === 0}>
-                SATIS YAP
-              </CButton>
+              <CRow className="fw-bold">
+                <CCol xs="4">
+                  <CButton
+                    color="warning"
+                    className="w-100 mt-3"
+                    disabled={cart.length === 0}
+                    onClick={() => setCart([])}
+                  >
+                    Temizle
+                  </CButton>
+                </CCol>
+                <CCol xs="8" className="text-end">
+                  <CButton color="primary" className="w-100 mt-3" disabled={cart.length === 0}>
+                    SATIS YAP
+                  </CButton>
+                </CCol>
+              </CRow>
             </div>
           </CCard>
         </CCol>
