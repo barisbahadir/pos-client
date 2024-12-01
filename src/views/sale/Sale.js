@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { CContainer, CRow, CCol, CButton, CCard, CCardBody, CCardHeader } from '@coreui/react'
 import './Sale.css'
+import { FaShoppingCart } from 'react-icons/fa'
 
 const Sale = () => {
   const productList = [
@@ -165,15 +166,27 @@ const Sale = () => {
             </CCardBody>
           </CCard>
         </CCol>
-
-        {/* Sağ Panel (Sepet) */}
         <CCol sm="4">
           <CCard className="cart-panel">
             <CCardHeader>Sepet</CCardHeader>
             <CCardBody>
               {cart.length === 0 ? ( // Sepet boşsa gösterilecek mesaj
-                <div className="empty-cart-message">
-                  <center>Sepete hicbir urun eklenmedi!</center>
+                <div
+                  className="empty-cart-message"
+                  style={{ position: 'relative', textAlign: 'center', height: '100%' }}
+                >
+                  {/* Sepet ikonu */}
+                  <FaShoppingCart
+                    size={50} // İkonun boyutunu büyütüyoruz
+                    color="#d1d1d4" // İkonu gri yapıyoruz
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      transform: 'translate(-50%, -50%)', // Ortalamak için
+                    }}
+                  />
+                  {/* Mesaj */}
                 </div>
               ) : (
                 <div>
