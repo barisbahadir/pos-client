@@ -1,3 +1,14 @@
+/*CATEGORIES*/
+
+.category-panel {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  overflow-y: auto; /* Bu satır eklenerek dikey kaydırma eklenir */
+}
+
 /*PRODUCTS*/
 
 .product-items {

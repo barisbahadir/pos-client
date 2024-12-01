@@ -145,7 +145,7 @@ const Sale = () => {
         <CCol sm="3">
           <CCard>
             <CCardHeader>Kategoriler</CCardHeader>
-            <CCardBody>
+            <CCardBody className="category-panel">
               {/* Kategorilerin Button'ları */}
               <div className="d-flex flex-column gap-2">
                 {categories.map((category, index) => (
