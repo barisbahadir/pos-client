@@ -144,43 +144,46 @@ const Sale = () => {
                 </div>
               ) : (
                 <div>
-                  {cart.map((item) => (
-                    <div key={item.id} className="cart-item">
-                      <div className="item-info">
-                        <div className="item-name">{item.name}</div>
-                        <div className="item-price">{item.price} $</div>
+                  {cart
+                    .slice()
+                    .reverse()
+                    .map((item) => (
+                      <div key={item.id} className="cart-item">
+                        <div className="item-info">
+                          <div className="item-name">{item.name}</div>
+                          <div className="item-price">{item.price} $</div>
+                        </div>
+                        <div className="item-controls">
+                          <button onClick={() => handleDecrement(item.id)}>-</button>
+                          <span style={{ margin: '0 10px' }}>{item.quantity}</span>
+                          <button onClick={() => handleIncrement(item.id)}>+</button>
+                        </div>
                       </div>
-                      <div className="item-controls">
-                        <button onClick={() => handleDecrement(item.id)}>-</button>
-                        <span style={{ margin: '0 10px' }}>{item.quantity}</span>
-                        <button onClick={() => handleIncrement(item.id)}>+</button>
-                      </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               )}
             </CCardBody>
             <div className="cart-footer">
               <CRow>
-                <CCol xs="6">Sub Total:</CCol>
+                <CCol xs="6">VERGISIZ TOPLAM:</CCol>
                 <CCol xs="6" className="text-end">
-                  {subTotal.toFixed(2)} $
+                  {subTotal.toFixed(2)} TL
                 </CCol>
               </CRow>
               <CRow>
-                <CCol xs="6">Tax (10%):</CCol>
+                <CCol xs="6">VERGI (%10):</CCol>
                 <CCol xs="6" className="text-end">
-                  {tax.toFixed(2)} $
+                  {tax.toFixed(2)} TL
                 </CCol>
               </CRow>
               <CRow className="fw-bold">
-                <CCol xs="6">Total:</CCol>
+                <CCol xs="6">TOPLAM:</CCol>
                 <CCol xs="6" className="text-end">
-                  {total.toFixed(2)} $
+                  {total.toFixed(2)} TL
                 </CCol>
               </CRow>
               <CButton color="primary" className="w-100 mt-3" disabled={cart.length === 0}>
-                CHECK OUT
+                SATIS YAP
               </CButton>
             </div>
           </CCard>

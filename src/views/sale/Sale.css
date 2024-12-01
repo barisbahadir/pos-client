@@ -156,6 +156,8 @@
   font-size: 13px;
   color: #007bff;
   margin-top: 5px; /* Fiyat ve isim arası boşluk */
+  font-weight: bold;
+
 }
 
 .cart-panel .cart-item .item-controls {
