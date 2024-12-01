@@ -7,44 +7,43 @@ const Sale = () => {
     {
       id: '1',
       name: 'Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger',
-      price: 45000,
+      price: 45.5,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
     },
     {
       id: '2',
       name: 'Sandwich',
-      price: 32000,
+      price: 32,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
     },
     {
       id: '3',
       name: 'Iced Matcha Latte',
-      price: 22000,
+      price: 22,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
     },
     {
       id: '4',
       name: 'Cinnamon Roll',
-      price: 20000,
+      price: 20.99,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
     },
     {
       id: '5',
       name: 'Choco Glaze',
-      price: 16000,
+      price: 16,
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
     },
     {
       id: '6',
       name: 'Choco Glaze 2',
-      price: 16000,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
+      price: 5.75,
+      imageUrl: '',
     },
   ]
 
@@ -100,14 +99,14 @@ const Sale = () => {
         </CCard>
       </CRow> */}
       <CRow>
-        <CCol sm="2">
+        {/* <CCol sm="2">
           <CCard>
             <CCardHeader>Kategoriler</CCardHeader>
             <CCardBody>Kategoriler gelecek</CCardBody>
           </CCard>
-        </CCol>
+        </CCol> */}
 
-        <CCol sm="6">
+        <CCol sm="8">
           <CCard>
             <CCardHeader>Ürünler</CCardHeader>
             <CCardBody>
@@ -118,10 +117,16 @@ const Sale = () => {
                     className="product-card"
                     onClick={() => handleAddToCart(product)}
                   >
-                    <img src={product.imageUrl} alt={product.name} className="product-image" />
-                    <div className="product-info">
-                      <div className="product-name">{product.name}</div>
-                      <div className="product-price">{product.price.toLocaleString()} TL</div>
+                    <div className="product-content">
+                      {product.imageUrl ? (
+                        <img src={product.imageUrl} alt={product.name} className="product-image" />
+                      ) : (
+                        <div className="product-image-placeholder"></div> // Resim yoksa bu divi göster
+                      )}
+                      <div className="product-info">
+                        <div className="product-name">{product.name}</div>
+                        <div className="product-price">{product.price.toLocaleString()} TL</div>
+                      </div>
                     </div>
                     <div className="add-to-cart-overlay">
                       <button className="add-to-cart">Sepete Ekle</button>
@@ -151,7 +156,7 @@ const Sale = () => {
                       <div key={item.id} className="cart-item">
                         <div className="item-info">
                           <div className="item-name">{item.name}</div>
-                          <div className="item-price">{item.price} $</div>
+                          <div className="item-price">{item.price} TL</div>
                         </div>
                         <div className="item-controls">
                           <button onClick={() => handleDecrement(item.id)}>-</button>
