@@ -19,12 +19,9 @@ RUN yarn build
 # 7. Hafif bir Nginx imajını kullanarak build dizinini sun
 FROM nginx:alpine
 
-# 8. Nginx ayarlarını kopyala (opsiyonel)
-COPY nginx.conf /etc/nginx/nginx.conf
-
-# 9. Derlenmiş dosyaları Nginx'in varsayılan dizinine kopyala
+# 8. Derlenmiş dosyaları Nginx'in varsayılan dizinine kopyala
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# 10. Nginx'i çalıştır
+# 9. Nginx'i çalıştır
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
