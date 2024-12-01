@@ -19,9 +19,6 @@ RUN npm run build
 # 7. Hafif bir Nginx imajını kullanarak build dizinini sun
 FROM nginx:alpine
 
-# 8. Nginx ayarlarını kopyala (opsiyonel)
-COPY nginx.conf /etc/nginx/nginx.conf
-
 # 9. Derlenmiş dosyaları Nginx'in varsayılan dizinine kopyala
 COPY --from=builder /app/dist /usr/share/nginx/html
 
