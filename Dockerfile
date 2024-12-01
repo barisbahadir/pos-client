@@ -4,8 +4,8 @@ FROM node:18 AS builder
 # 2. Çalışma dizinini ayarla
 WORKDIR /app
 
-# 3. package.json dosyalarını kopyala
-COPY package.json ./
+# 3. package.json ve yarn.lock dosyalarını kopyala
+COPY package.json yarn.lock ./
 
 # 4. Projenin bağımlılıklarını kur
 RUN yarn install
