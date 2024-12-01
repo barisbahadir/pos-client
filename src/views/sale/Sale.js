@@ -89,8 +89,15 @@ const Sale = () => {
     },
   ]
 
+  const categories = ['Okul Kiyafetleri', 'Defterler', 'Kirtasiye', 'Oyuncak', 'Hediyelik Esya']
+
   const [cart, setCart] = useState([])
   const [products] = useState(productList)
+  const [selectedCategory, setSelectedCategory] = useState(null)
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category)
+  }
 
   const handleAddToCart = (product) => {
     const existingProduct = cart.find((item) => item.id === product.id)
@@ -133,9 +140,39 @@ const Sale = () => {
   const { subTotal, tax, total } = calculateTotal()
 
   return (
-    <CContainer fluid>
+    <>
       <CRow>
-        <CCol sm="8">
+        <CCol sm="3">
+          <CCard>
+            <CCardHeader>Kategoriler</CCardHeader>
+            <CCardBody>
+              {/* Kategorilerin Button'ları */}
+              <div className="d-flex flex-column gap-2">
+                {categories.map((category, index) => (
+                  <CButton
+                    key={index}
+                    className="category-label"
+                    style={{
+                      cursor: 'pointer',
+                      padding: '10px',
+                      borderRadius: '5px',
+                      backgroundColor: selectedCategory === category ? '#007bff' : '#f0f0f0', // Seçili kategori rengi
+                      color: selectedCategory === category ? 'white' : '#333',
+                      textOverflow: 'ellipsis',
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                    }}
+                    onClick={() => handleCategoryClick(category)} // Kategori tıklandığında state değişecek
+                  >
+                    {category}
+                  </CButton>
+                ))}
+              </div>
+            </CCardBody>
+          </CCard>
+        </CCol>
+
+        <CCol sm="6">
           <CCard>
             <CCardHeader>Ürünler</CCardHeader>
             <CCardBody>
@@ -166,7 +203,8 @@ const Sale = () => {
             </CCardBody>
           </CCard>
         </CCol>
-        <CCol sm="4">
+
+        <CCol sm="3">
           <CCard className="cart-panel">
             <CCardHeader>Sepet</CCardHeader>
             <CCardBody>
@@ -236,7 +274,7 @@ const Sale = () => {
                     disabled={cart.length === 0}
                     onClick={() => setCart([])}
                   >
-                    Temizle
+                    Sil
                   </CButton>
                 </CCol>
                 <CCol xs="8" className="text-end">
@@ -249,7 +287,7 @@ const Sale = () => {
           </CCard>
         </CCol>
       </CRow>
-    </CContainer>
+    </>
   )
 }
 
