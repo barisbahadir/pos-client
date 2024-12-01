@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   CContainer,
   CRow,
@@ -8,9 +8,9 @@ import {
   CCardBody,
   CCardHeader,
   CFormInput,
-} from '@coreui/react';
-import { FaPlus, FaMinus, FaTrashAlt } from 'react-icons/fa';
-import './Sale.css';
+} from '@coreui/react'
+import { FaPlus, FaMinus, FaTrashAlt } from 'react-icons/fa'
+import './Sale.css'
 
 const Sale = () => {
   const productList = [
@@ -49,27 +49,27 @@ const Sale = () => {
       imageUrl:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
     },
-  ];
+  ]
 
-  const [cart, setCart] = useState([]);
-  const [products] = useState(productList);
+  const [cart, setCart] = useState([])
+  const [products] = useState(productList)
 
   const handleAddToCart = (product) => {
-    const existingProduct = cart.find((item) => item.id === product.id);
+    const existingProduct = cart.find((item) => item.id === product.id)
     if (existingProduct) {
       setCart(
         cart.map((item) =>
           item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
         ),
-      );
+      )
     } else {
-      setCart([...cart, { ...product, quantity: 1 }]);
+      setCart([...cart, { ...product, quantity: 1 }])
     }
-  };
+  }
 
   const handleRemoveFromCart = (id) => {
-    setCart(cart.filter((item) => item.id !== id));
-  };
+    setCart(cart.filter((item) => item.id !== id))
+  }
 
   const handleChangeQuantity = (id, action) => {
     setCart(
@@ -81,22 +81,28 @@ const Sale = () => {
             }
           : item,
       ),
-    );
-  };
+    )
+  }
 
-  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  const totalAmount = cart.reduce((total, item) => total + item.price * item.quantity, 0)
 
   return (
     <CContainer>
+      {/* <CRow>
+        <CCard>
+          <CCardHeader>URUN KATEGORILERI</CCardHeader>
+          <CCardBody>Kategoriler gelecek</CCardBody>
+        </CCard>
+      </CRow> */}
       <CRow>
-        <CCol sm="3">
+        <CCol sm="2">
           <CCard>
             <CCardHeader>URUN KATEGORILERI</CCardHeader>
             <CCardBody>Kategoriler gelecek</CCardBody>
           </CCard>
         </CCol>
 
-        <CCol sm="6" md="6">
+        <CCol sm="6">
           <CCard>
             <CCardHeader>Ürünler</CCardHeader>
             <CCardBody>
@@ -121,7 +127,7 @@ const Sale = () => {
         </CCol>
 
         {/* Sağ Panel (Sepet) */}
-        <CCol sm="3">
+        <CCol sm="4">
           <CCard>
             <CCardHeader>SEPET</CCardHeader>
             <CCardBody>
@@ -158,7 +164,7 @@ const Sale = () => {
         </CCol>
       </CRow>
     </CContainer>
-  );
-};
+  )
+}
 
-export default Sale;
+export default Sale
