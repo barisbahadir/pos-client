@@ -181,11 +181,10 @@
 }
 
 .cart-panel .cart-item .item-info .item-price {
-  font-size: 13px;
+  font-size: 15px;
   color: #007bff;
-  margin-top: 5px; /* Fiyat ve isim arası boşluk */
+  margin-top: 4px; /* Fiyat ve isim arası boşluk */
   font-weight: bold;
-
 }
 
 .cart-panel .cart-item .item-controls {

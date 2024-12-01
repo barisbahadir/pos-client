@@ -186,7 +186,7 @@ const Sale = () => {
                   </CButton>
                 </CCol>
                 <CCol xs="8" className="text-end">
-                  <CButton color="primary" className="w-100 mt-3" disabled={cart.length === 0}>
+                  <CButton color="success" className="w-100 mt-3" disabled={cart.length === 0}>
                     SATIS YAP
                   </CButton>
                 </CCol>
