@@ -93,7 +93,7 @@ const Sale = () => {
 
   const [cart, setCart] = useState([])
   const [products] = useState(productList)
-  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState('Okul Kiyafetleri')
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category)
@@ -141,7 +141,7 @@ const Sale = () => {
 
   return (
     <>
-      <CRow>
+      <CRow sm={{ gutterX: 3 }}>
         <CCol sm="3">
           <CCard>
             <CCardHeader>Kategoriler</CCardHeader>

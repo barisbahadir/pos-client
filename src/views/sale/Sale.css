@@ -129,19 +129,20 @@
   width: 100%;
   /* max-width: 350px; */
   margin: 0 auto;
-  border-radius: 5px;
+  /* border-radius: 5px; */
   display: flex;
   flex-direction: column;
   height: 550px;
-  border: 1px solid #ddd;
-  background-color: #fff;
+  /* border: 1px solid #ddd;
+  background-color: #fff; */
 }
 
-.cart-panel .card-header {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #ddd;
+/*.cart-panel*/ .card-header {
+  /* background-color: #f8f9fa;
+  border-bottom: 1px solid #ddd; */
   text-align: center;
-  padding: 10px;
+  font-weight: bold;
+  /* padding: 10px; */
 }
 
 .cart-panel .card-body {
