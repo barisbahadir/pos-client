@@ -3,18 +3,26 @@
 .product-items {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between; /* Boşlukları otomatik olarak ayarla */
+  gap: 10px; /* Öğeler arasındaki boşluğu ayarlamak için gap kullan */
 }
 
 .product-card {
-  width: 24%; /* Ürünlerin genişliği */
-  margin-bottom: 10px; /* Ürünler arasındaki mesafe */
-  margin-right: 6px;
+  width: calc(25% - 10px); /* 4 öğe yan yana, %25 genişlikten 10px'lik boşluk çıkar */
+  margin-bottom: 10px; /* Alt boşluk */
   position: relative;
   border: 1px solid #ddd;
   border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
+}
+
+.product-card:nth-child(4n+1) {
+  margin-left: 0; /* 4. öğe ve her 4 öğe sonrasında soldan boşluk kaldır */
+}
+
+.product-card:nth-child(4n) {
+  margin-right: 0; /* 4. öğe ve her 4 öğe sonrasında sağdan boşluk kaldır */
 }
 
 .product-content {

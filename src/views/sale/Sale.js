@@ -45,6 +45,47 @@ const Sale = () => {
       price: 5.75,
       imageUrl: '',
     },
+    {
+      id: '7',
+      name: 'Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger',
+      price: 45.5,
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
+    },
+    {
+      id: '8',
+      name: 'Sandwich',
+      price: 32,
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
+    },
+    {
+      id: '9',
+      name: 'Iced Matcha Latte',
+      price: 22,
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
+    },
+    {
+      id: '10',
+      name: 'Cinnamon Roll',
+      price: 20.99,
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
+    },
+    {
+      id: '11',
+      name: 'Choco Glaze',
+      price: 16,
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
+    },
+    {
+      id: '12',
+      name: 'Choco Glaze 2',
+      price: 5.75,
+      imageUrl: '',
+    },
   ]
 
   const [cart, setCart] = useState([])
