@@ -42,8 +42,8 @@ const _nav = [
     to: '/sale',
     icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
     badge: {
-      color: 'info',
-      text: 'A',
+      color: 'warning',
+      text: 'S',
     },
   },
   {
