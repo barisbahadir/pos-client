@@ -8,6 +8,7 @@ import {
   cilDescription,
   cilDrop,
   cilExternalLink,
+  cilHome,
   cilNotes,
   cilPencil,
   cilPuzzle,
@@ -18,13 +19,31 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
   {
+    component: CNavTitle,
+    name: 'Menu',
+  },
+  {
     component: CNavItem,
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    name: 'Anasayfa',
+    to: '/home',
+    icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
     badge: {
       color: 'info',
-      text: 'NEW',
+      text: 'A',
+    },
+  },
+  {
+    component: CNavTitle,
+    name: 'SATIS',
+  },
+  {
+    component: CNavItem,
+    name: 'Satislar',
+    to: '/sale',
+    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+    badge: {
+      color: 'info',
+      text: 'A',
     },
   },
   {
