@@ -50,14 +50,14 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <CForm onSubmit={handleLogin}>
-                    <h1>Login</h1>
+                    <h1>Giris Yap</h1>
                     <p className="text-body-secondary">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
-                        placeholder="Username"
+                        placeholder="Kullanici Adi"
                         autoComplete="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
@@ -69,7 +69,7 @@ const Login = () => {
                       </CInputGroupText>
                       <CFormInput
                         type="password"
-                        placeholder="Password"
+                        placeholder="Sifre"
                         autoComplete="current-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -78,12 +78,12 @@ const Login = () => {
                     <CRow>
                       <CCol xs={6}>
                         <CButton type="submit" color="primary" className="px-4">
-                          Login
+                          Giris Yap
                         </CButton>
                       </CCol>
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
-                          Forgot password?
+                          Sifreni mi unuttun?
                         </CButton>
                       </CCol>
                     </CRow>
@@ -93,14 +93,14 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
+                    <h2>Kaydol</h2>
                     <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
+                      Sisteme kaydolup, BAHADIR - Point of Sale uygulamasini hizlica kullanmaya
+                      baslayabilirsiniz.
                     </p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>
-                        Register Now!
+                        Hizlica Kaydol!
                       </CButton>
                     </Link>
                   </div>

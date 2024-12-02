@@ -3,23 +3,12 @@ import {
   CAvatar,
   CBadge,
   CDropdown,
-  CDropdownDivider,
   CDropdownHeader,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
 } from '@coreui/react'
-import {
-  cilBell,
-  cilCreditCard,
-  cilCommentSquare,
-  cilEnvelopeOpen,
-  cilFile,
-  cilLockLocked,
-  cilSettings,
-  cilTask,
-  cilUser,
-} from '@coreui/icons'
+import { cilBell, cilCommentSquare, cilEnvelopeOpen, cilTask } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
 import user from './../../assets/images/avatars/user.jpg'
@@ -60,7 +49,7 @@ const AppHeaderDropdown = () => {
             42
           </CBadge>
         </CDropdownItem>
-        <CDropdownHeader className="bg-body-secondary fw-semibold my-2">Settings</CDropdownHeader>
+        {/* <CDropdownHeader className="bg-body-secondary fw-semibold my-2">Settings</CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2" />
           Profile
@@ -82,10 +71,12 @@ const AppHeaderDropdown = () => {
           <CBadge color="primary" className="ms-2">
             42
           </CBadge>
-        </CDropdownItem>
-        <CDropdownDivider />
-        <CDropdownItem onClick={() => console.log('Cikis yap basildi')}>
-          <CIcon icon={cilLockLocked} className="me-2" />
+        </CDropdownItem> */}
+        <CDropdownHeader className="bg-body-secondary fw-semibold my-2">
+          OTURUMU KAPAT
+        </CDropdownHeader>
+        <CDropdownItem href="/logout">
+          <CIcon icon={cilAccountLogout} className="me-2" />
           Cikis Yap
         </CDropdownItem>
       </CDropdownMenu>
