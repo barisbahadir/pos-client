@@ -8,7 +8,7 @@ const Logout = () => {
   const dispatch = useDispatch()
 
   const [loading, setLoading] = useState(true)
-  const [countdown, setCountdown] = useState(3) // Geri sayım için durum
+  const [countdown, setCountdown] = useState(5) // Geri sayım için durum
 
   useEffect(() => {
     // JWT'yi silmek
@@ -41,16 +41,11 @@ const Logout = () => {
                 <CCardBody>
                   <h1>Oturumunuz Kapatildi</h1>
                   {loading ? (
-                    <>
-                      <p className="text-body-secondary">
-                        Oturumunuz kapatiliyor... Lutfen Bekleyin.
-                      </p>
-                      <p className="text-body-secondary">
-                        Aanasayfaya {countdown} saniye icerisinde yonlendirileceksiniz...
-                      </p>
-                    </>
+                    <p className="text-body-secondary">
+                      Anasayfaya {countdown} saniye icinde yonlendirileceksiniz...
+                    </p>
                   ) : (
-                    <p className="text-body-secondary">You have successfully logged out.</p>
+                    <p className="text-body-secondary">Basariyla cikis yapildi.</p>
                   )}
                   <CButton color="primary" className="px-4" onClick={() => navigate('/login')}>
                     Anasayfaya Git

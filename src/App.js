@@ -7,6 +7,7 @@ import './scss/style.scss'
 import './scss/examples.scss'
 import store from './store'
 import Logout from './views/pages/logout/Logout'
+import './scss/App.css'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -39,8 +40,10 @@ const App = () => {
       <BrowserRouter>
         <Suspense
           fallback={
-            <div className="pt-3 text-center">
-              <CSpinner color="primary" variant="grow" />
+            <div className="loading-overlay">
+              <div className="loading-spinner">
+                <CSpinner color="primary" variant="grow" />
+              </div>
             </div>
           }
         >
