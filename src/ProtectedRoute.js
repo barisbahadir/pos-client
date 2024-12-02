@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }) => {
   const token = useSelector((state) => state.token)
 
   // authToken undefined ise hatayı önlemek için kontrol ekleyin
-  if (token === undefined || !token) {
+  if (token === undefined || !token || token == null) {
     return <Navigate to="/login" replace />
   }
 
