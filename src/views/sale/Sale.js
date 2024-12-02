@@ -1,5 +1,18 @@
-import React, { useState } from 'react'
-import { CContainer, CRow, CCol, CButton, CCard, CCardBody, CCardHeader } from '@coreui/react'
+import React, { useEffect, useRef, useState } from 'react'
+import {
+  CContainer,
+  CRow,
+  CCol,
+  CButton,
+  CCard,
+  CCardBody,
+  CCardHeader,
+  CModalFooter,
+  CFormInput,
+  CModalBody,
+  CModalHeader,
+  CModal,
+} from '@coreui/react'
 import './Sale.css'
 import { FaShoppingCart } from 'react-icons/fa'
 
@@ -95,6 +108,10 @@ const Sale = () => {
   const [products] = useState(productList)
   const [selectedCategory, setSelectedCategory] = useState('Okul Kiyafetleri')
 
+  const [showFastPriceModal, setShowFastPriceModal] = useState(false)
+  const [fastPriceValue, setFastPriceValue] = useState('')
+  const inputRef = useRef(null) // Input'a referans oluşturduk
+
   const handleCategoryClick = (category) => {
     setSelectedCategory(category)
   }
@@ -122,7 +139,12 @@ const Sale = () => {
         item.id === id
           ? {
               ...item,
-              quantity: action === 'increase' ? item.quantity + 1 : item.quantity - 1,
+              quantity:
+                action === 'increase'
+                  ? item.quantity + 1
+                  : item.quantity < 1
+                    ? 0
+                    : item.quantity - 1,
             }
           : item,
       ),
@@ -139,6 +161,46 @@ const Sale = () => {
 
   const { subTotal, tax, total } = calculateTotal()
 
+  const handleInputChange = (e) => {
+    setFastPriceValue(e.target.value)
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // '+' tuşuna basıldığında modal'ı aç
+      if (e.key === '+') {
+        setShowFastPriceModal(true)
+      }
+      // 'Enter' tuşuna basıldığında modal'ı kapat
+      if (e.key === 'Enter') {
+        handleSubmit()
+      }
+    }
+
+    // Sayfa genelinde tuşları dinlemeye başla
+    window.addEventListener('keydown', handleKeyDown)
+
+    // Bileşen unmount olduğunda event listener'ı kaldır
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
+  // Modal açıldığında input'a odaklanmak
+  useEffect(() => {
+    if (showFastPriceModal) {
+      inputRef.current?.focus() // Input'a odaklan
+    }
+  }, [showFastPriceModal])
+
+  const handleSubmit = () => {
+    if (!!fastPriceValue) {
+      console.log('Urun Eklendi:', fastPriceValue) // Burada Urun Ekleme işlemini gerçekleştirebilirsiniz
+    }
+    setShowFastPriceModal(false) // Modal'ı kapat
+    setFastPriceValue('')
+  }
+
   return (
     <CContainer fluid>
       <CRow sm={{ gutterX: 3 }}>
@@ -146,7 +208,6 @@ const Sale = () => {
           <CCard>
             <CCardHeader>Kategoriler</CCardHeader>
             <CCardBody className="category-panel">
-              {/* Kategorilerin Button'ları */}
               <div className="d-flex flex-column gap-2">
                 {categories.map((category, index) => (
                   <CButton
@@ -171,7 +232,6 @@ const Sale = () => {
             </CCardBody>
           </CCard>
         </CCol>
-
         <CCol sm="6">
           <CCard>
             <CCardHeader>Ürünler</CCardHeader>
@@ -238,9 +298,13 @@ const Sale = () => {
                           <div className="item-price">{item.price} TL</div>
                         </div>
                         <div className="item-controls">
-                          <button onClick={() => handleDecrement(item.id)}>-</button>
+                          <button onClick={() => handleChangeQuantity(item.id, 'decrease')}>
+                            -
+                          </button>
                           <span style={{ margin: '0 10px' }}>{item.quantity}</span>
-                          <button onClick={() => handleIncrement(item.id)}>+</button>
+                          <button onClick={() => handleChangeQuantity(item.id, 'increase')}>
+                            +
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -248,12 +312,12 @@ const Sale = () => {
               )}
             </CCardBody>
             <div className="cart-footer">
-              <CRow>
+              {/* <CRow>
                 <CCol xs="6">VERGISIZ TOPLAM:</CCol>
                 <CCol xs="6" className="text-end">
                   {subTotal.toFixed(2)} TL
                 </CCol>
-              </CRow>
+              </CRow> */}
               <CRow>
                 <CCol xs="6">VERGI (%10):</CCol>
                 <CCol xs="6" className="text-end">
@@ -266,11 +330,22 @@ const Sale = () => {
                   {total.toFixed(2)} TL
                 </CCol>
               </CRow>
-              <CRow className="fw-bold">
+              <CRow>
+                <CCol>
+                  <CButton
+                    color="info"
+                    className="w-100 mt-3"
+                    onClick={() => setShowFastPriceModal(true)}
+                  >
+                    Hizli Fiyat Ekle
+                  </CButton>
+                </CCol>
+              </CRow>
+              <CRow className="fw-bold mt-2" sm={{ gutterX: 2 }}>
                 <CCol xs="4">
                   <CButton
                     color="warning"
-                    className="w-100 mt-3"
+                    className="w-100"
                     disabled={cart.length === 0}
                     onClick={() => setCart([])}
                   >
@@ -278,7 +353,7 @@ const Sale = () => {
                   </CButton>
                 </CCol>
                 <CCol xs="8" className="text-end">
-                  <CButton color="success" className="w-100 mt-3" disabled={cart.length === 0}>
+                  <CButton color="success" className="w-100" disabled={cart.length === 0}>
                     SATIS YAP
                   </CButton>
                 </CCol>
@@ -287,6 +362,45 @@ const Sale = () => {
           </CCard>
         </CCol>
       </CRow>
+
+      <CModal
+        alignment="center"
+        visible={showFastPriceModal}
+        onClose={() => setShowFastPriceModal(false)}
+        aria-labelledby="VerticallyCenteredExample"
+      >
+        <CModalHeader closeButton>Hızlı Fiyat Girişi</CModalHeader>
+        <CModalBody>
+          <div>
+            <label htmlFor="priceInput">Urun fiyatini giriniz:</label>
+            <CFormInput
+              id="priceInput"
+              value={fastPriceValue}
+              onChange={handleInputChange}
+              placeholder="Fiyat girin"
+            />
+          </div>
+          {fastPriceValue && (
+            <div style={{ marginTop: '20px', fontSize: '30px' }}>
+              <strong>Girilen Fiyat: {fastPriceValue} TL</strong>
+            </div>
+          )}
+        </CModalBody>
+        <CModalFooter>
+          <CRow className="fw-bold">
+            <CCol xs="4">
+              <CButton color="warning" onClick={() => setShowFastPriceModal(false)}>
+                Kapat
+              </CButton>
+            </CCol>
+            <CCol xs="8" className="text-end">
+              <CButton color="info" onClick={() => handleSubmit()}>
+                Urun Ekle
+              </CButton>
+            </CCol>
+          </CRow>
+        </CModalFooter>
+      </CModal>
     </CContainer>
   )
 }
