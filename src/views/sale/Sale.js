@@ -187,10 +187,10 @@ const Sale = () => {
       if (e.key === '+') {
         handleFastPriceModalShow(true)
       }
-      // 'Enter' tuşuna basıldığında modal'ı kapat
-      if (e.key === 'Enter') {
-        handleSubmit(fastPriceValue)
-      }
+      // // 'Enter' tuşuna basıldığında modal'ı kapat
+      // if (e.key === 'Enter') {
+      //   handleSubmit(fastPriceValue)
+      // }
     }
 
     // Sayfa genelinde tuşları dinlemeye başla
