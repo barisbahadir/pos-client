@@ -5,7 +5,7 @@ FROM node:18 AS builder
 WORKDIR /app
 
 # 3. package.json ve yarn.lock dosyalarını kopyala
-COPY package.json yarn.lock nginx.conf ./
+COPY package.json yarn.lock ./
 
 # 4. Bağımlılıkları yükle
 RUN yarn install
