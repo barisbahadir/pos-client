@@ -172,15 +172,24 @@ const Sale = () => {
     setFastPriceValue(e.target.value)
   }
 
+  const handleFastPriceModalShow = (show) => {
+    if (show === true) {
+      setFastPriceValue('')
+      setShowFastPriceModal(true)
+    } else {
+      setShowFastPriceModal(false)
+    }
+  }
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       // '+' tuşuna basıldığında modal'ı aç
       if (e.key === '+') {
-        setShowFastPriceModal(true)
+        handleFastPriceModalShow(true)
       }
       // 'Enter' tuşuna basıldığında modal'ı kapat
       if (e.key === 'Enter') {
-        handleSubmit()
+        handleSubmit(fastPriceValue)
       }
     }
 
@@ -202,11 +211,10 @@ const Sale = () => {
     }
   }, [showFastPriceModal])
 
-  const handleSubmit = () => {
-    const numberValue = Number(fastPriceValue)
+  const handleSubmit = (fastPriceValueStr) => {
+    const numberValue = Number(fastPriceValueStr)
     handleFastPriceProduct(isNaN(numberValue) ? 1 : numberValue)
-    setShowFastPriceModal(false) // Modal'ı kapat
-    setFastPriceValue('')
+    handleFastPriceModalShow(false) // Modal'ı kapat
   }
 
   return (
@@ -349,7 +357,7 @@ const Sale = () => {
                   <CButton
                     color="info"
                     className="w-100 mt-3"
-                    onClick={() => setShowFastPriceModal(true)}
+                    onClick={() => handleFastPriceModalShow(true)}
                   >
                     Hizli Fiyat Ekle
                   </CButton>
@@ -380,7 +388,7 @@ const Sale = () => {
       <CModal
         alignment="center"
         visible={showFastPriceModal}
-        onClose={() => setShowFastPriceModal(false)}
+        onClose={() => handleFastPriceModalShow(false)}
         aria-labelledby="VerticallyCenteredExample"
         backdrop="static"
       >
@@ -405,12 +413,12 @@ const Sale = () => {
         <CModalFooter>
           <CRow className="fw-bold">
             <CCol xs="4">
-              <CButton color="warning" onClick={() => setShowFastPriceModal(false)}>
+              <CButton color="warning" onClick={() => handleFastPriceModalShow(false)}>
                 Kapat
               </CButton>
             </CCol>
             <CCol xs="8" className="text-end">
-              <CButton color="info" onClick={() => handleSubmit()}>
+              <CButton color="info" onClick={() => handleSubmit(fastPriceValue)}>
                 Urun Ekle
               </CButton>
             </CCol>
