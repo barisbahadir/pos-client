@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
   CContainer,
   CRow,
@@ -17,100 +17,23 @@ import './Sale.css'
 import { FaShoppingCart } from 'react-icons/fa'
 
 const Sale = () => {
-  const productList = [
-    {
-      id: '1',
-      name: 'Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger',
-      price: 45.5,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '2',
-      name: 'Sandwich',
-      price: 32,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '3',
-      name: 'Iced Matcha Latte',
-      price: 22,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '4',
-      name: 'Cinnamon Roll',
-      price: 20.99,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '5',
-      name: 'Choco Glaze',
-      price: 16,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '6',
-      name: 'Choco Glaze 2',
-      price: 5.75,
-      imageUrl: '',
-    },
-    {
-      id: '7',
-      name: 'Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger Beef Burger',
-      price: 45.5,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '8',
-      name: 'Sandwich',
-      price: 32,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '9',
-      name: 'Iced Matcha Latte',
-      price: 22,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '10',
-      name: 'Cinnamon Roll',
-      price: 20.99,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '11',
-      name: 'Choco Glaze',
-      price: 16,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    },
-    {
-      id: '0',
-      name: 'Ozel Fiyatli Urun',
-      price: 1.0,
-      imageUrl: '',
-    },
-  ]
-
   const categories = ['Okul Kiyafetleri', 'Defterler', 'Kirtasiye', 'Oyuncak', 'Hediyelik Esya']
 
   const [cart, setCart] = useState([])
-  const [products] = useState(productList)
   const [selectedCategory, setSelectedCategory] = useState('Okul Kiyafetleri')
+  const productList = useMemo(() => {
+    return Array.from({ length: 12 }, (_, index) => ({
+      id: selectedCategory + index,
+      name: `${selectedCategory} - Ürün ${index + 1}`,
+      price: index + 1,
+      imageUrl:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
+    }))
+  }, [selectedCategory])
 
   const [showFastPriceModal, setShowFastPriceModal] = useState(false)
   const [fastPriceValue, setFastPriceValue] = useState('')
-  const inputRef = useRef(null) // Input'a referans oluşturduk
+  const inputRef = useRef(null)
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category)
@@ -253,7 +176,7 @@ const Sale = () => {
             <CCardHeader>Ürünler</CCardHeader>
             <CCardBody>
               <div className="product-items">
-                {products.map((product) => (
+                {productList.map((product) => (
                   <div
                     key={product.id}
                     className="product-card"
