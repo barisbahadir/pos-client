@@ -19,11 +19,14 @@ RUN yarn build
 # 7. Nginx'i kullanarak uygulamayı sunmak için ikinci aşamayı başlatıyoruz
 FROM nginx:alpine
 
-# 8. Derlenmiş dosyaları Nginx'in varsayılan dizinine kopyala
+# 8. Nginx için özel konfigürasyonu kopyalayın
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# 9. Derlenmiş dosyaları Nginx'in varsayılan dizinine kopyala
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# 9. Nginx'i çalıştırmak için port aç
+# 10. Nginx'i çalıştırmak için port aç
 EXPOSE 80
 
-# 10. Nginx'i başlat
+# 11. Nginx'i başlat
 CMD ["nginx", "-g", "daemon off;"]
