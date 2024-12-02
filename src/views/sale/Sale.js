@@ -370,6 +370,9 @@ const Sale = () => {
               onChange={handleInputChange}
               placeholder="Fiyat girin"
               ref={modalRef}
+              type="number"
+              step="0.01" // Ondalık sayılara izin verir
+              min="0" // Negatif sayılara izin vermez
             />
           </div>
           {fastPriceValue && (
