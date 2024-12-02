@@ -211,8 +211,8 @@ const Sale = () => {
     }
   }, [showFastPriceModal])
 
-  const handleSubmit = (fastPriceValueStr) => {
-    const numberValue = Number(fastPriceValueStr)
+  const handleSubmit = () => {
+    const numberValue = Number(fastPriceValue)
     handleFastPriceProduct(isNaN(numberValue) ? 1 : numberValue)
     handleFastPriceModalShow(false) // Modal'ı kapat
   }
@@ -418,7 +418,7 @@ const Sale = () => {
               </CButton>
             </CCol>
             <CCol xs="8" className="text-end">
-              <CButton color="info" onClick={() => handleSubmit(fastPriceValue)}>
+              <CButton color="info" onClick={() => handleSubmit()}>
                 Urun Ekle
               </CButton>
             </CCol>
