@@ -145,7 +145,8 @@ const Sale = () => {
   }
 
   const handleBarcodeSubmit = () => {
-    console.log('Okunan Barkod:', barcode)
+    const numberValue = Number(barcode)
+    handleFastPriceProduct(isNaN(numberValue) ? 1 : numberValue)
     setBarcode('') // Barkodu okuduktan sonra inputu temizle
   }
 
