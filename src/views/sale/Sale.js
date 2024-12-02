@@ -164,7 +164,7 @@ const Sale = () => {
 
   return (
     <CContainer fluid>
-      <CRow sm={{ gutterX: 3 }}>
+      <CRow className="g-3">
         <CCol sm="3">
           <CCard className="mb-3">
             <CCardHeader>Barkod Oku</CCardHeader>
