@@ -5,7 +5,7 @@ const AppFooter = () => {
   return (
     <CFooter className="px-4">
       <div>
-        <span className="ms-1">2024 Tum haklari saklidir. </span>
+        <span className="ms-1">2025 - Tum haklari saklidir. </span>
       </div>
       <div className="ms-auto">
         <span className="me-1">Powered by BARIS BAHADIR SAVUR</span>
