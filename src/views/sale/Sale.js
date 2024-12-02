@@ -196,15 +196,15 @@ const Sale = () => {
   // Modal açıldığında input'a odaklanmak
   useEffect(() => {
     if (showFastPriceModal) {
-      inputRef.current?.focus() // Input'a odaklan
+      setTimeout(() => {
+        inputRef.current?.focus() // Input'a odaklan
+      }, 300) // Modal'ın görünür olmasından sonra 100ms bekleyin
     }
   }, [showFastPriceModal])
 
   const handleSubmit = () => {
-    if (!!fastPriceValue) {
-      const numberValue = Number(fastPriceValue)
-      handleFastPriceProduct(isNaN(numberValue) ? 1 : numberValue)
-    }
+    const numberValue = Number(fastPriceValue)
+    handleFastPriceProduct(isNaN(numberValue) ? 1 : numberValue)
     setShowFastPriceModal(false) // Modal'ı kapat
     setFastPriceValue('')
   }
@@ -393,6 +393,7 @@ const Sale = () => {
               value={fastPriceValue}
               onChange={handleInputChange}
               placeholder="Fiyat girin"
+              ref={inputRef}
             />
           </div>
           {fastPriceValue && (
