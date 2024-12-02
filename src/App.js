@@ -42,7 +42,7 @@ const App = () => {
           fallback={
             <div className="loading-overlay">
               <div className="loading-spinner">
-                <CSpinner color="primary" variant="grow" />
+                <CSpinner color="info" />
               </div>
             </div>
           }
