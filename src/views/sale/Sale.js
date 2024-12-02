@@ -95,9 +95,9 @@ const Sale = () => {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
     },
     {
-      id: '12',
-      name: 'Choco Glaze 2',
-      price: 5.75,
+      id: '0',
+      name: 'Ozel Fiyatli Urun',
+      price: 1.0,
       imageUrl: '',
     },
   ]
@@ -114,6 +114,18 @@ const Sale = () => {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category)
+  }
+
+  const handleFastPriceProduct = (price) => {
+    const product = {
+      id: Math.random(),
+      name: price + ' TL Fiyatli Urun',
+      price: price,
+      imageUrl: '',
+    }
+    const cardItem = { ...product, quantity: 1 }
+
+    handleAddToCart(cardItem)
   }
 
   const handleAddToCart = (product) => {
@@ -155,7 +167,7 @@ const Sale = () => {
 
   const calculateTotal = () => {
     const subTotal = cart.reduce((total, item) => total + item.price * item.quantity, 0)
-    const tax = subTotal / 10
+    const tax = 0
     return { subTotal, tax, total: subTotal + tax }
   }
 
@@ -195,7 +207,8 @@ const Sale = () => {
 
   const handleSubmit = () => {
     if (!!fastPriceValue) {
-      console.log('Urun Eklendi:', fastPriceValue) // Burada Urun Ekleme işlemini gerçekleştirebilirsiniz
+      const numberValue = Number(fastPriceValue)
+      handleFastPriceProduct(isNaN(numberValue) ? 1 : numberValue)
     }
     setShowFastPriceModal(false) // Modal'ı kapat
     setFastPriceValue('')
@@ -319,9 +332,9 @@ const Sale = () => {
                 </CCol>
               </CRow> */}
               <CRow>
-                <CCol xs="6">VERGI (%10):</CCol>
+                <CCol xs="6">VERGI:</CCol>
                 <CCol xs="6" className="text-end">
-                  {tax.toFixed(2)} TL
+                  {(total / 10).toFixed(2)} TL
                 </CCol>
               </CRow>
               <CRow className="fw-bold">
@@ -368,6 +381,7 @@ const Sale = () => {
         visible={showFastPriceModal}
         onClose={() => setShowFastPriceModal(false)}
         aria-labelledby="VerticallyCenteredExample"
+        backdrop="static"
       >
         <CModalHeader closeButton>Hızlı Fiyat Girişi</CModalHeader>
         <CModalBody>
