@@ -18,8 +18,8 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useDispatch } from 'react-redux'
 
 const Login = () => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('user')
+  const [password, setPassword] = useState('password')
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -43,7 +43,7 @@ const Login = () => {
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center justify-content-center">
-      <CContainer>
+      <CContainer fluid>
         <CRow className="justify-content-center">
           <CCol md={6}>
             <CCardGroup className="shadow-lg rounded-3">
@@ -92,7 +92,7 @@ const Login = () => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-info py-5" style={{ width: '44%' }}>
+              <CCard className="text-white bg-info py-5">
                 <CCardBody className="text-center">
                   <div>
                     <h2 className="text-white mb-3">Kaydol</h2>
