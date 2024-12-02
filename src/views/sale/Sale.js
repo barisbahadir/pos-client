@@ -142,6 +142,7 @@ const Sale = () => {
   }
 
   const handleRemoveFromCart = (id) => {
+    console.log('triggered')
     setCart(cart.filter((item) => item.id !== id))
   }
 
@@ -151,12 +152,7 @@ const Sale = () => {
         item.id === id
           ? {
               ...item,
-              quantity:
-                action === 'increase'
-                  ? item.quantity + 1
-                  : item.quantity < 1
-                    ? 0
-                    : item.quantity - 1,
+              quantity: action === 'increase' ? item.quantity + 1 : item.quantity - 1,
             }
           : item,
       ),
@@ -311,7 +307,13 @@ const Sale = () => {
                           <div className="item-price">{item.price} TL</div>
                         </div>
                         <div className="item-controls">
-                          <button onClick={() => handleChangeQuantity(item.id, 'decrease')}>
+                          <button
+                            onClick={() => {
+                              item.quantity === 1
+                                ? handleRemoveFromCart(item.id)
+                                : handleChangeQuantity(item.id, 'decrease')
+                            }}
+                          >
                             -
                           </button>
                           <span style={{ margin: '0 10px' }}>{item.quantity}</span>
