@@ -8,7 +8,13 @@ import {
   CDropdownMenu,
   CDropdownToggle,
 } from '@coreui/react'
-import { cilAccountLogout, cilBell, cilCommentSquare, cilEnvelopeOpen, cilTask } from '@coreui/icons'
+import {
+  cilAccountLogout,
+  cilBell,
+  cilCommentSquare,
+  cilEnvelopeOpen,
+  cilTask,
+} from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
 import user from './../../assets/images/avatars/user.jpg'
