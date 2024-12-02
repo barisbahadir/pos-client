@@ -84,9 +84,9 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={() => console.log('Cikis yap basildi')}>
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          Cikis Yap
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

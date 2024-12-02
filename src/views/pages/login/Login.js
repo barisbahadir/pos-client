@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -15,8 +15,32 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import { useDispatch } from 'react-redux'
 
 const Login = () => {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogin = (e) => {
+    e.preventDefault()
+
+    // // Mock bir doğrulama işlemi
+    // if (username === 'admin' && password === 'password') {
+    //   const mockToken = 'mock-jwt-token' // Gerçek bir API'de backend'den gelir
+    //   dispatch({ type: 'login', token: mockToken }) // Redux store'a token'ı kaydet
+    //   navigate('/') // Anasayfaya yönlendir
+    // } else {
+    //   alert('Kullanıcı adı veya şifre yanlış!') // Basit bir hata mesajı
+    // }
+
+    // Mock bir doğrulama işlemi
+    const mockToken = 'mock-jwt-token' // Gerçek bir API'de backend'den gelir
+    dispatch({ type: 'login', token: mockToken }) // Redux store'a token'ı kaydet
+    navigate('/') // Anasayfaya yönlendir
+  }
+
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -25,14 +49,19 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm>
+                  <CForm onSubmit={handleLogin}>
                     <h1>Login</h1>
                     <p className="text-body-secondary">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
-                      <CFormInput placeholder="Username" autoComplete="username" />
+                      <CFormInput
+                        placeholder="Username"
+                        autoComplete="username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -42,11 +71,13 @@ const Login = () => {
                         type="password"
                         placeholder="Password"
                         autoComplete="current-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4">
+                        <CButton type="submit" color="primary" className="px-4">
                           Login
                         </CButton>
                       </CCol>

@@ -1,12 +1,11 @@
 import React, { Suspense, useEffect } from 'react'
-import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Provider } from 'react-redux'
 import { CSpinner, useColorModes } from '@coreui/react'
+import ProtectedRoute from './ProtectedRoute'
 import './scss/style.scss'
-
-// We use those styles to show code examples, you should remove them in your application.
 import './scss/examples.scss'
+import store from './store'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
@@ -19,7 +18,6 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 
 const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
-  const storedTheme = useSelector((state) => state.theme)
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.href.split('?')[1])
@@ -32,29 +30,37 @@ const App = () => {
       return
     }
 
-    setColorMode(storedTheme)
+    setColorMode('light')
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    // <HashRouter> --old (I replaced)
-    <BrowserRouter>
-      <Suspense
-        fallback={
-          <div className="pt-3 text-center">
-            <CSpinner color="primary" variant="grow" />
-          </div>
-        }
-      >
-        <Routes>
-          <Route exact path="/login" name="Login Page" element={<Login />} />
-          <Route exact path="/register" name="Register Page" element={<Register />} />
-          <Route exact path="/404" name="Page 404" element={<Page404 />} />
-          <Route exact path="/500" name="Page 500" element={<Page500 />} />
-          <Route path="*" name="Home" element={<DefaultLayout />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-    //</HashRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Suspense
+          fallback={
+            <div className="pt-3 text-center">
+              <CSpinner color="primary" variant="grow" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route exact path="/login" name="Login Page" element={<Login />} />
+            <Route exact path="/register" name="Register Page" element={<Register />} />
+            <Route exact path="/404" name="Page 404" element={<Page404 />} />
+            <Route exact path="/500" name="Page 500" element={<Page500 />} />
+            <Route
+              path="*"
+              name="Home"
+              element={
+                <ProtectedRoute>
+                  <DefaultLayout />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
