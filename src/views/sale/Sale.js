@@ -142,7 +142,6 @@ const Sale = () => {
   }
 
   const handleRemoveFromCart = (id) => {
-    console.log('triggered')
     setCart(cart.filter((item) => item.id !== id))
   }
 
