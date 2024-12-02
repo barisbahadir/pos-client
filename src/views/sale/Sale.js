@@ -33,7 +33,9 @@ const Sale = () => {
 
   const [showFastPriceModal, setShowFastPriceModal] = useState(false)
   const [fastPriceValue, setFastPriceValue] = useState('')
-  const inputRef = useRef(null)
+  const [barcode, setBarcode] = useState('')
+  const modalRef = useRef(null)
+  const barcodeRef = useRef(null)
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category)
@@ -129,10 +131,29 @@ const Sale = () => {
   useEffect(() => {
     if (showFastPriceModal) {
       setTimeout(() => {
-        inputRef.current?.focus() // Input'a odaklan
+        modalRef.current?.focus() // Input'a odaklan
       }, 300) // Modal'ın görünür olmasından sonra 100ms bekleyin
     }
   }, [showFastPriceModal])
+
+  useEffect(() => {
+    barcodeRef.current?.focus()
+  }, [barcode])
+
+  const handleBarcodeChange = (e) => {
+    setBarcode(e.target.value)
+  }
+
+  const handleBarcodeSubmit = () => {
+    console.log('Okunan Barkod:', barcode)
+    setBarcode('') // Barkodu okuduktan sonra inputu temizle
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleBarcodeSubmit()
+    }
+  }
 
   const handleSubmit = () => {
     const numberValue = Number(fastPriceValue)
@@ -144,9 +165,22 @@ const Sale = () => {
     <CContainer fluid>
       <CRow sm={{ gutterX: 3 }}>
         <CCol sm="3">
+          <CCard className="mb-3">
+            <CCardHeader>Barkod Oku</CCardHeader>
+            <CCardBody>
+              <CFormInput
+                ref={barcodeRef}
+                type="text"
+                value={barcode}
+                onChange={handleBarcodeChange}
+                onKeyDown={handleKeyDown}
+                placeholder="Barkod giriniz veya okuyunuz..."
+              />
+            </CCardBody>
+          </CCard>
           <CCard>
             <CCardHeader>Kategoriler</CCardHeader>
-            <CCardBody className="category-panel">
+            <CCardBody className="sale-panel">
               <div className="d-flex flex-column gap-2">
                 {categories.map((category, index) => (
                   <CButton
@@ -174,7 +208,7 @@ const Sale = () => {
         <CCol sm="6">
           <CCard>
             <CCardHeader>Ürünler</CCardHeader>
-            <CCardBody>
+            <CCardBody className="sale-panel">
               <div className="product-items">
                 {productList.map((product) => (
                   <div
@@ -263,6 +297,16 @@ const Sale = () => {
                   {subTotal.toFixed(2)} TL
                 </CCol>
               </CRow> */}
+              {/* <CRow className="m-1 mt-0 mb-2">
+                <CFormInput
+                  ref={barcodeRef}
+                  type="text"
+                  value={barcode}
+                  onChange={handleBarcodeChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Barkod giriniz veya okuyunuz..."
+                />
+              </CRow> */}
               <CRow>
                 <CCol xs="6">VERGI:</CCol>
                 <CCol xs="6" className="text-end">
@@ -324,7 +368,7 @@ const Sale = () => {
               value={fastPriceValue}
               onChange={handleInputChange}
               placeholder="Fiyat girin"
-              ref={inputRef}
+              ref={modalRef}
             />
           </div>
           {fastPriceValue && (
