@@ -140,7 +140,7 @@ const Sale = () => {
   const { subTotal, tax, total } = calculateTotal()
 
   return (
-    <>
+    <CContainer fluid>
       <CRow sm={{ gutterX: 3 }}>
         <CCol sm="3">
           <CCard>
@@ -287,7 +287,7 @@ const Sale = () => {
           </CCard>
         </CCol>
       </CRow>
-    </>
+    </CContainer>
   )
 }
 
