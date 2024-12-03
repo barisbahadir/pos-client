@@ -1,9 +1,9 @@
 {
-  "name": "bahadir-pos",
-  "version": "5.2.0",
-  "description": "Bahadir - Point of Sale",
+  "name": "pos-client",
+  "version": "1.0.0",
+  "description": "Bahadir POS Client",
   "homepage": ".",
-  "author": "Baris Bahadir",
+  "author": "Baris Bahadir Savur",
   "scripts": {
     "build": "vite build",
     "lint": "eslint \"src/**/*.js\"",

@@ -1,6 +1,8 @@
 # 1. Node.js imajını kullanarak uygulamayı derlemek için bir yapı aşaması oluşturuyoruz
 FROM node:18 AS builder
 
+# ENV REACT_APP_API_URL=http://localhost:8080/api
+
 # 2. Çalışma dizinini ayarla
 WORKDIR /app
 
