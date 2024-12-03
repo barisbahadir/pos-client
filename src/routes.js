@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
-const Sale = React.lazy(() => import('./views/sale/Sale'))
+const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'))
+const Sale = React.lazy(() => import('./pages/sale/Sale'))
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
