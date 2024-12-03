@@ -14,7 +14,7 @@ const api = axios.create({
 // JWT token'ı header'a ekleyen bir interceptor ekliyoruz
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('jwt_token')
+    const token = localStorage.getItem('token')
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
@@ -34,7 +34,7 @@ api.interceptors.response.use(
     // Hata kodu 401 ise kullanıcıyı giriş sayfasına yönlendirebiliriz
     if (error.response && error.response.status === 401) {
       // Token geçersiz veya süresi dolmuşsa, kullanıcıyı login sayfasına yönlendirebiliriz.
-      localStorage.removeItem('jwt_token')
+      localStorage.removeItem('token')
       window.location.href = '/login'
     }
     return Promise.reject(error)
