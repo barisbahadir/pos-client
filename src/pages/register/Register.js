@@ -17,6 +17,7 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import ApiService from '../../ApiService'
 import './Register.css'
+import { toast } from 'react-toastify'
 
 const Register = () => {
   // Form verilerini state olarak yönetiyoruz
@@ -28,6 +29,7 @@ const Register = () => {
 
   // Kayıt işlemi
   const handleRegister = async (e) => {
+    setError('')
     e.preventDefault()
 
     // Şifre ve şifre tekrarı kontrolü
@@ -45,6 +47,7 @@ const Register = () => {
 
       // Başarılı kayıt durumunda yönlendirme
       if (response) {
+        toast('Kaydiniz basariyla olusturuldu')
         navigate('/login') // Giriş sayfasına yönlendir
       }
     } catch (err) {

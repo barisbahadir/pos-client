@@ -1,0 +1,46 @@
+/* Genel stil ayarları */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f4f8;
+}
+
+.bg-body-tertiary {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+}
+
+/* Buzlu cam (frosted glass) efekti */
+.bg-opacity-75 {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+}
+
+/* Buton stil ayarları */
+button {
+  border-radius: 25px;
+  font-size: 1rem;
+}
+
+button:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.5);
+}
+
+/* Card stil ayarları */
+.card {
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* H1 ve paragraflar */
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.2rem;
+}
