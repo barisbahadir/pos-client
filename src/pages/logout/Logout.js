@@ -13,7 +13,7 @@ const Logout = () => {
   const [countdown, setCountdown] = useState(5) // Geri sayım için durum
 
   useEffect(() => {
-    toast.error('Çıkış yapıldı')
+    toast('Çıkış yapıldı')
 
     // JWT'yi silmek
     dispatch({ type: 'logout' })
