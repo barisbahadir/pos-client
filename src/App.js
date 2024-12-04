@@ -8,11 +8,11 @@ import './scss/examples.scss'
 import store from './store'
 import Logout from './pages/logout/Logout'
 import './scss/App.css'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css' // React Toastify stil dosyasını import ediyoruz
 
-// Containers
+// React.lazy ile sayfalar
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
-
-// Pages
 const Login = React.lazy(() => import('./pages/login/Login'))
 const Register = React.lazy(() => import('./pages/register/Register'))
 const Page404 = React.lazy(() => import('./pages/page404/Page404'))
@@ -64,6 +64,19 @@ const App = () => {
             />
           </Routes>
         </Suspense>
+        <ToastContainer
+          position="bottom-center"
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition:Bounce
+        />
       </BrowserRouter>
     </Provider>
   )

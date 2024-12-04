@@ -51,15 +51,11 @@ const Logout = () => {
                   ) : (
                     <p className="text-body-secondary text-center mb-4">Başarıyla çıkış yapıldı.</p>
                   )}
-                  <div className="d-grid">
-                    <CButton
-                      color="primary"
-                      className="px-4 w-100"
-                      onClick={() => navigate('/login')}
-                    >
+                  <center>
+                    <CButton color="primary" className="px-4" onClick={() => navigate('/login')}>
                       Anasayfaya Git
                     </CButton>
-                  </div>
+                  </center>
                 </CCardBody>
               </CCard>
             </CCardGroup>
