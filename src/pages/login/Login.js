@@ -16,29 +16,39 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useDispatch } from 'react-redux'
+import ApiService from '../../ApiService'
+import './Login.css'
 
 const Login = () => {
-  const [username, setUsername] = useState('user')
-  const [password, setPassword] = useState('password')
+  const [email, setEmail] = useState('zeliha')
+  const [password, setPassword] = useState('zeliha')
+  const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const handleLogin = (e) => {
-    e.preventDefault()
+  const handleLogin = async (e) => {
+    e.preventDefault() // Formun gönderilmesini engelle
 
-    // // Mock bir doğrulama işlemi
-    // if (username === 'admin' && password === 'password') {
-    //   const mockToken = 'mock-jwt-token' // Gerçek bir API'de backend'den gelir
-    //   dispatch({ type: 'login', token: mockToken }) // Redux store'a token'ı kaydet
-    //   navigate('/') // Anasayfaya yönlendir
-    // } else {
-    //   alert('Kullanıcı adı veya şifre yanlış!') // Basit bir hata mesajı
-    // }
+    try {
+      const response = await ApiService.post('/api/auth/login', { email, password }) // email kullanıyoruz
 
-    // Mock bir doğrulama işlemi
-    const mockToken = 'mock-jwt-token' // Gerçek bir API'de backend'den gelir
-    dispatch({ type: 'login', token: mockToken }) // Redux store'a token'ı kaydet
-    navigate('/sale') // Anasayfaya yönlendir
+      // Başarılı giriş
+      const { token } = response
+      if (token) {
+        // Token'ı localStorage'a kaydediyoruz
+        localStorage.setItem('token', token)
+
+        dispatch({ type: 'login', token: token }) // Redux store'a token'ı kaydet
+        navigate('/sale') // Anasayfaya yönlendir
+      }
+    } catch (err) {
+      // Hata mesajını ekranda gösteriyoruz
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || 'Login failed!')
+      } else {
+        setError('An error occurred. Please try again.')
+      }
+    }
   }
 
   return (
@@ -54,15 +64,14 @@ const Login = () => {
                       Giris Yap
                     </h1>
                     <p className="text-body-secondary text-center mb-4">Sisteme giriş yapın</p>
+                    {error && <div className="alert alert-danger text-center">{error}</div>}
                     <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
+                      <CInputGroupText>@</CInputGroupText>
                       <CFormInput
-                        placeholder="Kullanıcı Adı"
-                        autoComplete="username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        placeholder="E-Mail"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} // email'i güncelliyoruz
                       />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
@@ -77,7 +86,12 @@ const Login = () => {
                         onChange={(e) => setPassword(e.target.value)}
                       />
                     </CInputGroup>
-                    <CRow>
+                    <div className="d-grid">
+                      <CButton type="submit" color="warning" className="px-4 w-100">
+                        Giriş Yap
+                      </CButton>
+                    </div>
+                    {/* <CRow>
                       <CCol xs={6}>
                         <CButton type="submit" color="warning" className="px-4 w-100">
                           Giriş Yap
@@ -88,7 +102,7 @@ const Login = () => {
                           Şifreni mi unuttun?
                         </CButton>
                       </CCol>
-                    </CRow>
+                    </CRow> */}
                   </CForm>
                 </CCardBody>
               </CCard>

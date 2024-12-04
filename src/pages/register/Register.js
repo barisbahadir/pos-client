@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
   CCardBody,
+  CCardGroup,
   CCol,
   CContainer,
   CForm,
@@ -13,54 +15,117 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
+import ApiService from '../../ApiService'
+import './Register.css'
 
 const Register = () => {
+  // Form verilerini state olarak yönetiyoruz
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState(null)
+  const navigate = useNavigate()
+
+  // Kayıt işlemi
+  const handleRegister = async (e) => {
+    e.preventDefault()
+
+    // Şifre ve şifre tekrarı kontrolü
+    if (password !== confirmPassword) {
+      setError('Şifreler eşleşmiyor.')
+      return
+    }
+
+    try {
+      // Kayıt isteği
+      const response = await ApiService.post('/api/auth/register', {
+        email,
+        password,
+      })
+
+      // Başarılı kayıt durumunda yönlendirme
+      if (response) {
+        navigate('/login') // Giriş sayfasına yönlendir
+      }
+    } catch (err) {
+      // Hata mesajını gösteriyoruz
+      if (err.response && err.response.data) {
+        setError(err.response.data.message || 'Kayıt sırasında hata oluştu!')
+      } else {
+        setError('Bir hata oluştu. Lütfen tekrar deneyin.')
+      }
+    }
+  }
+
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
+    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center justify-content-center">
+      <CContainer fluid>
         <CRow className="justify-content-center">
-          <CCol md={9} lg={7} xl={6}>
-            <CCard className="mx-4">
-              <CCardBody className="p-4">
-                <CForm>
-                  <h1>Register</h1>
-                  <p className="text-body-secondary">Create your account</p>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilUser} />
-                    </CInputGroupText>
-                    <CFormInput placeholder="Username" autoComplete="username" />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>@</CInputGroupText>
-                    <CFormInput placeholder="Email" autoComplete="email" />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                    />
-                  </CInputGroup>
-                  <CInputGroup className="mb-4">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Repeat password"
-                      autoComplete="new-password"
-                    />
-                  </CInputGroup>
-                  <div className="d-grid">
-                    <CButton color="success">Create Account</CButton>
+          <CCol md={6}>
+            <CCardGroup className="shadow-lg rounded-3">
+              <CCard className="bg-white bg-opacity-75 p-4">
+                <CCardBody>
+                  <CForm onSubmit={handleRegister}>
+                    <h1 className="text-center mb-4" style={{ fontSize: '2rem' }}>
+                      Kayıt Ol
+                    </h1>
+                    <p className="text-body-secondary text-center mb-4">Hesabınızı oluşturun</p>
+                    {error && <div className="alert alert-danger text-center">{error}</div>}
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>@</CInputGroupText>
+                      <CFormInput
+                        placeholder="Email"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-3">
+                      <CInputGroupText>
+                        <CIcon icon={cilLockLocked} />
+                      </CInputGroupText>
+                      <CFormInput
+                        type="password"
+                        placeholder="Şifre"
+                        autoComplete="new-password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </CInputGroup>
+                    <CInputGroup className="mb-4">
+                      <CInputGroupText>
+                        <CIcon icon={cilLockLocked} />
+                      </CInputGroupText>
+                      <CFormInput
+                        type="password"
+                        placeholder="Şifreyi Tekrarla"
+                        autoComplete="new-password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </CInputGroup>
+                    <div className="d-grid">
+                      <CButton color="warning" type="submit">
+                        Hesap Oluştur
+                      </CButton>
+                    </div>
+                  </CForm>
+                </CCardBody>
+              </CCard>
+              <CCard className="text-white bg-info py-5">
+                <CCardBody className="text-center">
+                  <div>
+                    <h2 className="text-white mb-3">Zaten Hesabınız Var mı?</h2>
+                    <p>Giriş yaparak hesabınıza erişebilirsiniz.</p>
+                    <Link to="/login">
+                      <CButton color="light" className="mt-3" active tabIndex={-1}>
+                        Giriş Yap!
+                      </CButton>
+                    </Link>
                   </div>
-                </CForm>
-              </CCardBody>
-            </CCard>
+                </CCardBody>
+              </CCard>
+            </CCardGroup>
           </CCol>
         </CRow>
       </CContainer>

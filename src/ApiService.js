@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Ortam değişkeni ile API URL'ini alıyoruz
-const API_URL = process.env.REACT_APP_API_URL // .env dosyasındaki REACT_APP_API_URL
+const API_URL = 'https://pos-api.up.railway.app'
 
 // Axios instance'ı oluşturuyoruz
 const api = axios.create({
@@ -11,10 +11,20 @@ const api = axios.create({
   },
 })
 
+// Token geçerliliğini kontrol eden fonksiyon
+const getAuthToken = () => {
+  const token = localStorage.getItem('token')
+  if (!token) {
+    return null
+  }
+  // Burada token geçerliliği kontrol edilebilir (örneğin expiration date)
+  return token
+}
+
 // JWT token'ı header'a ekleyen bir interceptor ekliyoruz
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = getAuthToken()
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
@@ -31,21 +41,39 @@ api.interceptors.response.use(
     return response
   },
   (error) => {
-    // Hata kodu 401 ise kullanıcıyı giriş sayfasına yönlendirebiliriz
-    if (error.response && error.response.status === 401) {
+    // Hata kodu 401 veya 403 ise kullanıcıyı giriş sayfasına yönlendirebiliriz
+    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
       // Token geçersiz veya süresi dolmuşsa, kullanıcıyı login sayfasına yönlendirebiliriz.
       localStorage.removeItem('token')
-      window.location.href = '/login'
+      window.location.href = '/logout'
+    } else if (error.response && error.response.status === 500) {
+      // Sunucu hatasında kullanıcıyı bilgilendirebiliriz
+      // alert('Something went wrong on the server, please try again later.')
     }
     return Promise.reject(error)
   },
 )
 
+// Dinamik bir API istek fonksiyonu
+const request = async (method, url, data = {}, params = {}) => {
+  try {
+    const response = await api({
+      method,
+      url,
+      data,
+      params,
+    })
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+
 const ApiService = {
-  get: (url, params = {}) => api.get(url, { params }),
-  post: (url, data) => api.post(url, data),
-  put: (url, data) => api.put(url, data),
-  delete: (url) => api.delete(url),
+  get: (url, params = {}) => request('get', url, {}, params),
+  post: (url, data) => request('post', url, data),
+  put: (url, data) => request('put', url, data),
+  delete: (url) => request('delete', url),
 }
 
 export default ApiService
