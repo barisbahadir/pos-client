@@ -47,7 +47,7 @@ const Register = () => {
 
       // Başarılı kayıt durumunda yönlendirme
       if (response) {
-        toast('Kaydiniz basariyla olusturuldu')
+        toast.success('Kaydiniz basariyla olusturuldu')
         navigate('/login') // Giriş sayfasına yönlendir
       }
     } catch (err) {

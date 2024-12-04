@@ -18,6 +18,7 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useDispatch } from 'react-redux'
 import ApiService from '../../ApiService'
 import './Login.css'
+import { toast } from 'react-toastify'
 
 const Login = () => {
   const [email, setEmail] = useState('zeliha')
@@ -35,6 +36,8 @@ const Login = () => {
       // Başarılı giriş
       const { token } = response
       if (token) {
+        toast.info('Hosgeldin ' + email)
+
         // Token'ı localStorage'a kaydediyoruz
         localStorage.setItem('token', token)
 
@@ -61,7 +64,7 @@ const Login = () => {
                 <CCardBody>
                   <CForm onSubmit={handleLogin}>
                     <h1 className="text-center mb-4" style={{ fontSize: '2rem' }}>
-                      Giris Yap
+                      Giris
                     </h1>
                     <p className="text-body-secondary text-center mb-4">Sisteme giriş yapın</p>
                     {error && <div className="alert alert-danger text-center">{error}</div>}

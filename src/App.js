@@ -71,11 +71,11 @@ const App = () => {
           newestOnTop={false}
           closeOnClick
           rtl={false}
-          pauseOnFocusLoss
+          pauseOnFocusLoss={false}
           draggable
-          pauseOnHover
-          theme="light"
-          transition:Bounce
+          pauseOnHover={true}
+          theme="colored"
+          transition:Slide
         />
       </BrowserRouter>
     </Provider>
