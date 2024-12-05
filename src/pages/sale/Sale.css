@@ -237,7 +237,7 @@
   overflow: hidden;
   text-overflow: ellipsis; /* Taşma durumunda üç nokta ekler */
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* En fazla 2 satır */
+  line-clamp: 2; /* En fazla 2 satır */
   -webkit-box-orient: vertical;
 }
 
