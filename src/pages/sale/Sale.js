@@ -17,6 +17,7 @@ import './Sale.css'
 import { FaShoppingCart } from 'react-icons/fa'
 import ApiService from '../../ApiService'
 import LoadingBar from '../../components/LoadingBar'
+import { toast } from 'react-toastify'
 
 const Sale = () => {
   const [isLoading, setLoading] = useState(false)
@@ -45,10 +46,7 @@ const Sale = () => {
           }
         }
       } catch (err) {
-        // Hata mesajını ekranda gösteriyoruz
-        if (err) {
-          setError(err.response.data.message || 'Login failed!')
-        }
+        toast.error(getErrorMessage(err))
       } finally {
         setLoading(false)
       }
