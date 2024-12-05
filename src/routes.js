@@ -3,6 +3,7 @@ import React from 'react'
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'))
 const Sale = React.lazy(() => import('./pages/sale/Sale'))
 const AddProduct = React.lazy(() => import('./pages/product/AddProduct'))
+const AddCategory = React.lazy(() => import('./pages/category/AddCategory'))
 
 // Core UI
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -60,7 +61,7 @@ const routes = [
   { path: '/home', name: 'Anasayfa', element: Dashboard },
   { path: '/sale', name: 'Satis Ekrani', element: Sale },
   { path: '/categories', name: 'Kategoriler', element: Dashboard },
-  { path: '/category/new', name: 'Yeni Kategori', element: AddProduct },
+  { path: '/category/new', name: 'Yeni Kategori', element: AddCategory },
   { path: '/products', name: 'Urunler', element: Dashboard },
   { path: '/product/new', name: 'Yeni Urun', element: AddProduct },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },

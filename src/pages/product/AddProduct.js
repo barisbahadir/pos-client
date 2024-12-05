@@ -297,7 +297,7 @@ const AddProduct = () => {
             </CRow>
 
             <center>
-              <CButton type="submit" color="warning" className="mt-3 w-25" disabled={isLoading}>
+              <CButton type="submit" color="warning" className="m-3 w-50" disabled={isLoading}>
                 Kaydet
               </CButton>
             </center>
