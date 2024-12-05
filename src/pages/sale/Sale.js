@@ -227,7 +227,7 @@ const Sale = () => {
       const response = await ApiService.post('/api/transaction/add', cardData)
 
       if (response) {
-        toast.success('Alisveris basariyla kaydedildi')
+        toast.success(`${total.toFixed(2)} TL tutarindaki alisveris sisteme kaydedildi.`)
         setCart([])
       }
     } catch (err) {
