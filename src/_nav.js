@@ -11,6 +11,7 @@ import {
   cilHome,
   cilNotes,
   cilPencil,
+  cilPlus,
   cilPuzzle,
   cilSpeedometer,
   cilStar,
@@ -38,7 +39,7 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Satislar',
+    name: 'Satis Yap',
     to: '/sale',
     icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
     badge: {
@@ -47,6 +48,32 @@ const _nav = [
     },
   },
   {
+    component: CNavTitle,
+    name: 'Kategori',
+  },
+  {
+    component: CNavItem,
+    name: 'Kategoriler',
+    to: '/categories',
+    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
+    name: 'Urun',
+  },
+  {
+    component: CNavItem,
+    name: 'Urunler',
+    to: '/products',
+    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Yeni Urun Ekle',
+    to: '/products/new',
+    icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+  },
+  /*{
     component: CNavTitle,
     name: 'Theme',
   },
@@ -464,7 +491,7 @@ const _nav = [
     name: 'Docs',
     href: 'https://coreui.io/react/docs/templates/installation/',
     icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
-  },
+  },*/
 ]
 
 export default _nav

@@ -2,6 +2,9 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'))
 const Sale = React.lazy(() => import('./pages/sale/Sale'))
+const AddProduct = React.lazy(() => import('./pages/product/AddProduct'))
+
+// Core UI
 const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -55,7 +58,10 @@ const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/home', name: 'Anasayfa', element: Dashboard },
-  { path: '/sale', name: 'Satislar', element: Sale },
+  { path: '/sale', name: 'Satis Ekrani', element: Sale },
+  { path: '/categories', name: 'Kategoriler', element: Sale },
+  { path: '/products', name: 'Urunler', element: Sale },
+  { path: '/products/new', name: 'Yeni Urun Ekle', element: AddProduct },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },

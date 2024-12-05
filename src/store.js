@@ -3,7 +3,7 @@ import { legacy_createStore as createStore } from 'redux'
 const initialState = {
   sidebarShow: true,
   theme: 'light',
-  sidebarUnfoldable: true,
+  sidebarUnfoldable: false,
   token: localStorage.getItem('token') || null, // Token durumu
 }
 
