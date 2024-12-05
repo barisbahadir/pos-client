@@ -12,15 +12,22 @@ import {
   CModalBody,
   CModalHeader,
   CModal,
+  CTooltip,
 } from '@coreui/react'
 import './Sale.css'
 import { FaShoppingCart } from 'react-icons/fa'
 import ApiService from '../../ApiService'
 import LoadingBar from '../../components/LoadingBar'
 import { toast } from 'react-toastify'
+import { AiOutlineBarcode } from 'react-icons/ai'
+import { getErrorMessage, getFormattedDateTimeNow } from '../../utils/Utils'
+import { useNavigate } from 'react-router-dom'
 
 const Sale = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setLoading] = useState(false)
+  const [isSaveLoading, setSaveLoading] = useState(false)
   const [error, setError] = useState(null)
   const [data, setData] = useState([])
 
@@ -200,6 +207,36 @@ const Sale = () => {
     handleFastPriceModalShow(false) // Modal'ı kapat
   }
 
+  const handleSaveTransaction = async (e) => {
+    e.preventDefault()
+    setSaveLoading(true)
+    try {
+      const cardData = {
+        transactionDate: getFormattedDateTimeNow(),
+        transactionItems: cart.map((c) => {
+          const item = {
+            productName: c.name,
+            price: c.price,
+            quantity: c.quantity,
+          }
+
+          return item
+        }),
+      }
+
+      const response = await ApiService.post('/api/transaction/add', cardData)
+
+      if (response) {
+        toast.success('Alisveris basariyla kaydedildi')
+        setCart([])
+      }
+    } catch (err) {
+      toast.error(getErrorMessage(err))
+    } finally {
+      setSaveLoading(false)
+    }
+  }
+
   return (
     <CContainer fluid>
       <CRow className="g-3">
@@ -207,14 +244,31 @@ const Sale = () => {
           <CCard className="mb-3">
             <CCardHeader>Barkod Oku</CCardHeader>
             <CCardBody>
-              <CFormInput
-                ref={barcodeRef}
-                type="text"
-                value={barcode}
-                onChange={handleBarcodeChange}
-                onKeyDown={handleKeyDown}
-                placeholder="Barkod giriniz veya okuyunuz..."
-              />
+              <div className="d-flex align-items-center">
+                <CFormInput
+                  ref={barcodeRef}
+                  type="text"
+                  value={barcode}
+                  disabled={isSaveLoading}
+                  onChange={handleBarcodeChange}
+                  onKeyDown={handleKeyDown}
+                  placeholder="Barkod okutunuz."
+                  className="me-2" // Sağda boşluk bırakır
+                />
+                <CTooltip content="Tüm ürünleri listele">
+                  <CButton
+                    style={{
+                      backgroundColor: 'white', // Buton beyaz
+                      border: '1px solid #ccc', // Buton çerçevesi gri
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <AiOutlineBarcode color="darkgray" size="20px" /> {/* Koyu gri ikon */}
+                  </CButton>
+                </CTooltip>
+              </div>
             </CCardBody>
           </CCard>
           <CCard>
@@ -375,6 +429,7 @@ const Sale = () => {
                   <CButton
                     color="info"
                     className="w-100 mt-3"
+                    disabled={isSaveLoading}
                     onClick={() => handleFastPriceModalShow(true)}
                   >
                     Hizli Fiyat Ekle
@@ -386,14 +441,19 @@ const Sale = () => {
                   <CButton
                     color="warning"
                     className="w-100"
-                    disabled={cart.length === 0}
+                    disabled={cart.length === 0 || isSaveLoading}
                     onClick={() => setCart([])}
                   >
                     Sil
                   </CButton>
                 </CCol>
                 <CCol xs="8" className="text-end">
-                  <CButton color="success" className="w-100" disabled={cart.length === 0}>
+                  <CButton
+                    color="success"
+                    className="w-100"
+                    disabled={cart.length === 0 || isSaveLoading}
+                    onClick={handleSaveTransaction}
+                  >
                     SATIS YAP
                   </CButton>
                 </CCol>
