@@ -51,12 +51,7 @@ const Register = () => {
         navigate('/login') // Giriş sayfasına yönlendir
       }
     } catch (err) {
-      // Hata mesajını gösteriyoruz
-      if (err.response && err.response.data) {
-        setError(err.response.data.message || 'Kayıt sırasında hata oluştu!')
-      } else {
-        setError('Bir hata oluştu. Lütfen tekrar deneyin.')
-      }
+      setError(getErrorMessage(err))
     }
   }
 
@@ -70,9 +65,9 @@ const Register = () => {
                 <CCardBody>
                   <CForm onSubmit={handleRegister}>
                     <h1 className="text-center mb-4" style={{ fontSize: '2rem' }}>
-                      Kayıt Ol
+                      BAHADIR POS
                     </h1>
-                    <p className="text-body-secondary text-center mb-4">Hesabınızı oluşturun</p>
+                    <p className="text-body-secondary text-center mb-4">Hesabınızı Oluşturun</p>
                     {error && <div className="alert alert-danger text-center">{error}</div>}
                     <CInputGroup className="mb-3">
                       <CInputGroupText>@</CInputGroupText>

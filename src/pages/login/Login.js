@@ -19,6 +19,7 @@ import { useDispatch } from 'react-redux'
 import ApiService from '../../ApiService'
 import './Login.css'
 import { toast } from 'react-toastify'
+import { getErrorMessage } from '../../utils/Utils'
 
 const Login = () => {
   const [email, setEmail] = useState('zeliha')
@@ -45,12 +46,7 @@ const Login = () => {
         navigate('/sale') // Anasayfaya yönlendir
       }
     } catch (err) {
-      // Hata mesajını ekranda gösteriyoruz
-      if (err.response && err.response.data) {
-        setError(err.response.data.message || 'Login failed!')
-      } else {
-        setError('An error occurred. Please try again.')
-      }
+      setError(getErrorMessage(err))
     }
   }
 
@@ -64,9 +60,9 @@ const Login = () => {
                 <CCardBody>
                   <CForm onSubmit={handleLogin}>
                     <h1 className="text-center mb-4" style={{ fontSize: '2rem' }}>
-                      Giris
+                      BAHADIR POS
                     </h1>
-                    <p className="text-body-secondary text-center mb-4">Sisteme giriş yapın</p>
+                    <p className="text-body-secondary text-center mb-4">Sisteme Giriş Yapın</p>
                     {error && <div className="alert alert-danger text-center">{error}</div>}
                     <CInputGroup className="mb-3">
                       <CInputGroupText>@</CInputGroupText>

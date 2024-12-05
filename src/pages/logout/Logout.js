@@ -9,21 +9,17 @@ const Logout = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const [loading, setLoading] = useState(true)
   const [countdown, setCountdown] = useState(5) // Geri sayım için durum
 
   useEffect(() => {
-    toast('Çıkış yapıldı')
-
-    // JWT'yi silmek
-    dispatch({ type: 'logout' })
-
     // Geri sayımı başlat
     const countdownInterval = setInterval(() => {
       setCountdown((prev) => {
         if (prev === 1) {
           clearInterval(countdownInterval) // Geri sayım bittiğinde arayı kes
-          setLoading(false) // Yükleniyor durumu sona eriyor
+
+          // JWT'yi silmek
+          dispatch({ type: 'logout' })
           navigate('/login') // 5 saniye sonra login sayfasına yönlendir
         }
         return prev - 1
@@ -44,13 +40,9 @@ const Logout = () => {
                   <h1 className="text-center mb-4" style={{ fontSize: '2rem' }}>
                     Oturum Kapatıldı
                   </h1>
-                  {loading ? (
-                    <p className="text-body-secondary text-center mb-4">
-                      Anasayfaya {countdown} saniye içinde yönlendirileceksiniz...
-                    </p>
-                  ) : (
-                    <p className="text-body-secondary text-center mb-4">Başarıyla çıkış yapıldı.</p>
-                  )}
+                  <p className="text-body-secondary text-center mb-4">
+                    {countdown} saniye içinde <b>Anasayfaya</b> yönlendirileceksiniz...
+                  </p>
                   <center>
                     <CButton color="primary" className="px-4" onClick={() => navigate('/login')}>
                       Anasayfaya Git
