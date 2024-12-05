@@ -2,6 +2,7 @@ import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
   cilBell,
+  cilBook,
   cilCalculator,
   cilChartPie,
   cilCursor,
@@ -28,10 +29,10 @@ const _nav = [
     name: 'Anasayfa',
     to: '/home',
     icon: <CIcon icon={cilHome} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-      text: 'A',
-    },
+    // badge: {
+    //   color: 'info',
+    //   text: 'A',
+    // },
   },
   {
     component: CNavTitle,
@@ -43,8 +44,8 @@ const _nav = [
     to: '/sale',
     icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
     badge: {
-      color: 'warning',
-      text: 'S',
+      color: 'info',
+      text: '☆',
     },
   },
   {
@@ -55,7 +56,13 @@ const _nav = [
     component: CNavItem,
     name: 'Kategoriler',
     to: '/categories',
-    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Yeni Kategori',
+    to: '/category/new',
+    icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,
@@ -65,12 +72,12 @@ const _nav = [
     component: CNavItem,
     name: 'Urunler',
     to: '/products',
-    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Yeni Urun Ekle',
-    to: '/products/new',
+    name: 'Yeni Urun',
+    to: '/product/new',
     icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
   },
   /*{

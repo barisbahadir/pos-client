@@ -1,0 +1,16 @@
+
+
+/* Buton stil ayarları */
+button {
+  border-radius: 25px;
+  font-size: 1rem;
+}
+
+button:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 153, 51, 0.5);
+}
