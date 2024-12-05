@@ -1,23 +1,65 @@
-.sale-panel {
+/* CATEGORIES */
+
+.category-panel {
   width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  max-height: 600px;
+  max-height: 475px;
   overflow-y: auto; /* Bu satır eklenerek dikey kaydırma eklenir */
 }
 
 /* PRODUCTS */
 
-.product-items {
+.product-panel {
+  width: 100%;
+  margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between; /* Boşlukları otomatik olarak ayarla */
+  flex-direction: column;
+  height: 605px;
+  overflow-y: auto; /* Bu satır eklenerek dikey kaydırma eklenir */
+}
+
+/* .product-items kısmını grid düzenine çeviriyoruz */
+.product-items {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Varsayılan: 4 sütun */
   gap: 10px; /* Öğeler arasındaki boşluğu ayarlamak için gap kullan */
 }
 
+/* Tablet boyutunda (max-width: 1024px) 3 sütun */
+@media (max-width: 1024px) {
+  .product-items {
+    grid-template-columns: repeat(3, 1fr); /* 3 sütun */
+  }
+}
+
+/* Küçük ekranlarda (max-width: 768px) 2 sütun */
+@media (max-width: 768px) {
+  .product-items {
+    grid-template-columns: repeat(2, 1fr); /* 2 sütun */
+  }
+}
+
+/* Çok küçük ekranlarda (max-width: 480px) 1 sütun */
+@media (max-width: 480px) {
+  .product-items {
+    grid-template-columns: 1fr; /* 1 sütun */
+  }
+}
+
+.no-products {
+  font-size: 18px;
+  color: #777;
+  height: 100%; /* Kapsayıcı yüksekliğini tamamen kapla */
+  display: flex;
+  justify-content: center; /* Yatayda ortala */
+  align-items: center; /* Dikeyde ortala */
+  width: 100%; /* Tüm genişliği kaplar */
+}
+
 .product-card {
-  width: calc(25% - 10px); /* 4 öğe yan yana, %25 genişlikten 10px'lik boşluk çıkar */
+  width: 1fr;
   margin-bottom: 10px; /* Alt boşluk */
   position: relative;
   border: 1px solid #ddd;

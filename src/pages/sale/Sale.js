@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   CContainer,
   CRow,
@@ -15,30 +15,67 @@ import {
 } from '@coreui/react'
 import './Sale.css'
 import { FaShoppingCart } from 'react-icons/fa'
+import ApiService from '../../ApiService'
+import LoadingBar from '../../components/LoadingBar'
 
 const Sale = () => {
-  const categories = ['Okul Kiyafetleri', 'Defterler', 'Kirtasiye', 'Oyuncak', 'Hediyelik Esya']
+  const [isLoading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [data, setData] = useState([])
 
-  const [cart, setCart] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState('Okul Kiyafetleri')
-  const productList = useMemo(() => {
-    return Array.from({ length: 12 }, (_, index) => ({
-      id: selectedCategory + index,
-      name: `${selectedCategory} - Ürün ${index + 1}`,
-      price: index + 1,
-      imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZmgtKUXwKdnc0oTPL-EYE5cexEXHJ3nW20g&s',
-    }))
-  }, [selectedCategory])
-
+  const [selectedCategoryId, setSelectedCategoryId] = useState(1)
   const [showFastPriceModal, setShowFastPriceModal] = useState(false)
   const [fastPriceValue, setFastPriceValue] = useState('')
   const [barcode, setBarcode] = useState('')
   const modalRef = useRef(null)
   const barcodeRef = useRef(null)
 
-  const handleCategoryClick = (category) => {
-    setSelectedCategory(category)
+  const [cart, setCart] = useState([])
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true)
+        const response = await ApiService.get('/api/category/list')
+        if (response != null && response != undefined && Array.isArray(response)) {
+          setData(response)
+
+          if (response[0]) {
+            setSelectedCategoryId(response[0].id)
+          }
+        }
+      } catch (err) {
+        // Hata mesajını ekranda gösteriyoruz
+        if (err) {
+          setError(err.response.data.message || 'Login failed!')
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [])
+
+  function getProductsByCategoryId(id) {
+    if (id !== undefined && data != undefined && data.length > 0) {
+      const filteredData = data.filter((cat) => cat.id === id)
+
+      if (
+        filteredData !== undefined &&
+        Array.isArray(filteredData) &&
+        filteredData[0] !== undefined &&
+        Array.isArray(filteredData[0].products)
+      ) {
+        return filteredData[0].products || []
+      }
+    }
+
+    return []
+  }
+
+  const handleCategoryClick = (categoryId) => {
+    setSelectedCategoryId(categoryId)
   }
 
   const handleFastPriceProduct = (price) => {
@@ -53,18 +90,21 @@ const Sale = () => {
     handleAddToCart(cardItem)
   }
 
-  const handleAddToCart = (product) => {
-    const existingProduct = cart.find((item) => item.id === product.id)
-    if (existingProduct) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
-        ),
-      )
-    } else {
-      setCart([...cart, { ...product, quantity: 1 }])
-    }
-  }
+  const handleAddToCart = useCallback(
+    (product) => {
+      const existingProduct = cart.find((item) => item.id === product.id)
+      if (existingProduct) {
+        setCart(
+          cart.map((item) =>
+            item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item,
+          ),
+        )
+      } else {
+        setCart([...cart, { ...product, quantity: 1 }])
+      }
+    },
+    [cart],
+  )
 
   const handleRemoveFromCart = (id) => {
     setCart(cart.filter((item) => item.id !== id))
@@ -165,7 +205,7 @@ const Sale = () => {
   return (
     <CContainer fluid>
       <CRow className="g-3">
-        <CCol sm="3">
+        <CCol md="3">
           <CCard className="mb-3">
             <CCardHeader>Barkod Oku</CCardHeader>
             <CCardBody>
@@ -181,64 +221,77 @@ const Sale = () => {
           </CCard>
           <CCard>
             <CCardHeader>Kategoriler</CCardHeader>
-            <CCardBody className="sale-panel">
-              <div className="d-flex flex-column gap-2">
-                {categories.map((category, index) => (
-                  <CButton
-                    key={index}
-                    className="category-label"
-                    style={{
-                      cursor: 'pointer',
-                      padding: '10px',
-                      borderRadius: '5px',
-                      backgroundColor: selectedCategory === category ? '#007bff' : '#f0f0f0', // Seçili kategori rengi
-                      color: selectedCategory === category ? 'white' : '#333',
-                      textOverflow: 'ellipsis',
-                      overflow: 'hidden',
-                      whiteSpace: 'nowrap',
-                    }}
-                    onClick={() => handleCategoryClick(category)} // Kategori tıklandığında state değişecek
-                  >
-                    {category}
-                  </CButton>
-                ))}
-              </div>
+            <CCardBody className="category-panel">
+              {isLoading ? (
+                <LoadingBar />
+              ) : (
+                <>
+                  <div className="d-flex flex-column gap-2">
+                    {data.map((category) => (
+                      <CButton
+                        key={Math.random()}
+                        className="category-label"
+                        style={{
+                          cursor: 'pointer',
+                          padding: '10px',
+                          borderRadius: '5px',
+                          backgroundColor:
+                            selectedCategoryId === category.id ? '#007bff' : '#f0f0f0', // Seçili kategori rengi
+                          color: selectedCategoryId === category.id ? 'white' : '#333',
+                          textOverflow: 'ellipsis',
+                          overflow: 'hidden',
+                          whiteSpace: 'nowrap',
+                        }}
+                        onClick={() => handleCategoryClick(category.id)} // Kategori tıklandığında state değişecek
+                      >
+                        {category.name}
+                      </CButton>
+                    ))}
+                  </div>
+                </>
+              )}
             </CCardBody>
           </CCard>
         </CCol>
-        <CCol sm="6">
+        <CCol md="6">
           <CCard>
             <CCardHeader>Ürünler</CCardHeader>
-            <CCardBody className="sale-panel">
-              <div className="product-items">
-                {productList.map((product) => (
-                  <div
-                    key={product.id}
-                    className="product-card"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    <div className="product-content">
-                      {product.imageUrl ? (
-                        <img src={product.imageUrl} alt={product.name} className="product-image" />
-                      ) : (
-                        <div className="product-image-placeholder"></div> // Resim yoksa bu divi göster
-                      )}
-                      <div className="product-info">
-                        <div className="product-name">{product.name}</div>
-                        <div className="product-price">{product.price.toLocaleString()} TL</div>
+            <CCardBody className="product-panel">
+              {isLoading ? (
+                <LoadingBar />
+              ) : getProductsByCategoryId(selectedCategoryId).length > 0 ? (
+                <div className="product-items">
+                  {getProductsByCategoryId(selectedCategoryId).map((product) => (
+                    <div
+                      key={product.id} // Math.random yerine ürün ID'si kullanmak daha doğru olur
+                      className="product-card"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      <div className="product-content">
+                        {product.image ? (
+                          <img src={product.image} alt={product.name} className="product-image" />
+                        ) : (
+                          <div className="product-image-placeholder"></div>
+                        )}
+                        <div className="product-info">
+                          <div className="product-name">{product.name}</div>
+                          <div className="product-price">{product.price.toLocaleString()} TL</div>
+                        </div>
+                      </div>
+                      <div className="add-to-cart-overlay">
+                        <button className="add-to-cart">Sepete Ekle</button>
                       </div>
                     </div>
-                    <div className="add-to-cart-overlay">
-                      <button className="add-to-cart">Sepete Ekle</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="no-products">Kategoriye eklenmiş hiçbir ürün yok</div>
+              )}
             </CCardBody>
           </CCard>
         </CCol>
 
-        <CCol sm="3">
+        <CCol md="3">
           <CCard className="cart-panel">
             <CCardHeader>Sepet</CCardHeader>
             <CCardBody>
@@ -258,7 +311,6 @@ const Sale = () => {
                       transform: 'translate(-50%, -50%)', // Ortalamak için
                     }}
                   />
-                  {/* Mesaj */}
                 </div>
               ) : (
                 <div>
