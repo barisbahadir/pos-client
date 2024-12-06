@@ -118,7 +118,9 @@ const ProductList = () => {
     }
   }
 
-  return (
+  return isLoading ? (
+    <LoadingBar />
+  ) : (
     <CContainer className="pos-container">
       <CRow>
         {/* Sol Kolon */}

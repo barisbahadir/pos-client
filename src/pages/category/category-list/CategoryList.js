@@ -14,44 +14,18 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import apiService from 'src/ApiService'
 import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
-
-import defaultProduct from 'src/assets/images/product.png'
 import { getErrorMessage } from 'src/utils/Utils'
-import { useNavigate } from 'react-router-dom'
 
 const CategoryList = () => {
-  const navigate = useNavigate()
-
   const [isLoading, setLoading] = useState(false)
-  const [selectedCategoryId, setSelectedCategoryId] = useState()
-
   const [categories, setCategories] = useState([])
-  const [products, setProducts] = useState([])
 
-  useEffect(() => {
-    const filteredData = categories.filter((cat) => cat.id === selectedCategoryId)
-    if (
-      filteredData !== undefined &&
-      Array.isArray(filteredData) &&
-      filteredData[0] !== undefined &&
-      Array.isArray(filteredData[0].products)
-    ) {
-      setProducts(filteredData[0].products)
-    }
-  }, [selectedCategoryId])
-
-  // API'den kategorileri alma
-  // Kategorileri getiren fonksiyon
   const fetchCategories = async () => {
     try {
       setLoading(true)
       const response = await apiService.get('/api/category/list')
       if (response != null && response != undefined && Array.isArray(response)) {
         setCategories(response)
-
-        if (response[0]) {
-          setSelectedCategoryId(response[0].id)
-        }
       }
     } catch (err) {
       toast.error(getErrorMessage(err))
@@ -65,15 +39,6 @@ const CategoryList = () => {
     fetchCategories() // Sayfa yüklendiğinde kategori listesi alınıyor
   }, []) // Boş bağımlılık dizisi, sadece bir kez çalışmasını sağlar
 
-  // Manuel tetikleme için bir buton
-  const handleManualFetch = async () => {
-    await fetchCategories() // Kullanıcı butona tıkladığında da kategori listesini al
-  }
-
-  const handleCategoryClick = (categoryId) => {
-    setSelectedCategoryId(categoryId)
-  }
-
   // Kartların sırasını değiştirme fonksiyonu
   const onDragEnd = (result) => {
     const { destination, source } = result
@@ -81,11 +46,11 @@ const CategoryList = () => {
 
     if (destination.index === source.index) return // Aynı yerde bırakma yapılırsa işlem yapma
 
-    const reorderedItems = Array.from(products)
+    const reorderedItems = Array.from(categories)
     const [movedItem] = reorderedItems.splice(source.index, 1) // Taşınan öğeyi çıkar
     reorderedItems.splice(destination.index, 0, movedItem) // Taşınan öğeyi yeni konumda ekle
 
-    setProducts(reorderedItems) // Yeni sıralamayı set et
+    setCategories(reorderedItems) // Yeni sıralamayı set et
   }
 
   // Handle form submission
@@ -93,8 +58,7 @@ const CategoryList = () => {
     setLoading(true)
 
     const parameters = {
-      categoryId: selectedCategoryId,
-      orderedValues: products.map((p, i) => {
+      orderedValues: categories.map((p, i) => {
         const prod = {
           id: p.id,
           orderValue: i + 1,
@@ -104,10 +68,10 @@ const CategoryList = () => {
     }
 
     try {
-      const response = await apiService.post('/api/product/order-update', parameters)
+      const response = await apiService.post('/api/category/order-update', parameters)
 
       if (response) {
-        toast.success(`Urunlerin siralamasi kaydedildi`)
+        toast.success(`Kategorilerin siralamasi kaydedildi.`)
         // navigate('/home')
       }
     } catch (err) {
@@ -118,14 +82,16 @@ const CategoryList = () => {
     }
   }
 
-  return (
+  return isLoading ? (
+    <LoadingBar />
+  ) : (
     <CContainer className="pos-container">
       <CRow>
         {/* Sol Kolon */}
         <CCol md="5">
           <CCard className="mb-3">
             <CCardHeader>
-              <b>Urunler</b>
+              <b>Kategoriler</b>
             </CCardHeader>
             <CCardBody>
               Satis ekraninda gosterilecek siralamayi belirleyebilir ve asagidaki Siralamayi Kaydet
@@ -138,39 +104,6 @@ const CategoryList = () => {
               >
                 Sıralamayı Kaydet
               </CButton>
-            </CCardBody>
-          </CCard>
-          <CCard className="mb-3">
-            <CCardHeader>Kategoriler</CCardHeader>
-            <CCardBody className="category-panel">
-              {isLoading ? (
-                <LoadingBar />
-              ) : (
-                <>
-                  <div className="d-flex flex-column gap-2">
-                    {categories.map((category) => (
-                      <CButton
-                        key={category.id}
-                        className="category-label"
-                        style={{
-                          cursor: 'pointer',
-                          padding: '10px',
-                          borderRadius: '5px',
-                          backgroundColor:
-                            selectedCategoryId === category.id ? '#007bff' : '#f0f0f0', // Seçili kategori rengi
-                          color: selectedCategoryId === category.id ? 'white' : '#333',
-                          textOverflow: 'ellipsis',
-                          overflow: 'hidden',
-                          whiteSpace: 'nowrap',
-                        }}
-                        onClick={() => handleCategoryClick(category.id)} // Kategori tıklandığında state değişecek
-                      >
-                        {category.name}
-                      </CButton>
-                    ))}
-                  </div>
-                </>
-              )}
             </CCardBody>
           </CCard>
         </CCol>
@@ -189,7 +122,7 @@ const CategoryList = () => {
                     gap: '10px',
                   }}
                 >
-                  {products.map((item, index) => (
+                  {categories.map((item, index) => (
                     <Draggable key={item.id} draggableId={`item-${item.id}`} index={index}>
                       {(provided) => (
                         <div
@@ -218,13 +151,13 @@ const CategoryList = () => {
                               alignItems: 'center',
                               justifyContent: 'center',
                               width: '10px',
-                              paddingLeft: '8px',
-                              paddingRight: '6px',
+                              paddingLeft: '15px',
+                              paddingRight: '20px',
                             }}
                           >
                             ⋮⋮
                           </div>
-                          <div
+                          {/* <div
                             style={{
                               width: '120px',
                               height: '100px',
@@ -246,7 +179,7 @@ const CategoryList = () => {
                                 maxHeight: '100%',
                               }}
                             />
-                          </div>
+                          </div> */}
 
                           {/* Yazılar */}
                           <div style={{ flex: '1', overflow: 'hidden' }}>
@@ -267,7 +200,12 @@ const CategoryList = () => {
                               {item.name}
                             </p>
                             <p style={{ margin: 0, color: '#888', fontSize: '15px' }}>
-                              Fiyat: <b>{item.price}</b> TL
+                              Urun Sayisi:
+                              <b>
+                                {item.products && Array.isArray(item.products)
+                                  ? ` ${item.products.length}`
+                                  : ''}
+                              </b>
                             </p>
                           </div>
                           <div

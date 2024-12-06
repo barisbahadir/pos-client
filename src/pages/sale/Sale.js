@@ -274,7 +274,7 @@ const Sale = () => {
             <CCardHeader>Kategoriler</CCardHeader>
             <CCardBody className="category-panel">
               {isLoading ? (
-                <LoadingBar />
+                <LoadingBar showCustom />
               ) : (
                 <>
                   <div className="d-flex flex-column gap-2">
@@ -309,7 +309,7 @@ const Sale = () => {
             <CCardHeader>Ürünler</CCardHeader>
             <CCardBody className="product-panel">
               {isLoading ? (
-                <LoadingBar />
+                <LoadingBar showCustom />
               ) : getProductsByCategoryId(selectedCategoryId).length > 0 ? (
                 <div className="product-items">
                   {getProductsByCategoryId(selectedCategoryId).map((product) => (
