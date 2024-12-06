@@ -32,3 +32,13 @@
   font-weight: bold;
   /* padding: 10px; */
 }
+
+.btn-info,
+.c-button-info { /* CoreUI ve Bootstrap için */
+  color: #fff !important; /* Yazı rengini beyaz yapar ve önem derecesini artırır */
+}
+
+.btn-danger,
+.c-button-danger { /* CoreUI ve Bootstrap için */
+  color: #fff !important; /* Yazı rengini beyaz yapar ve önem derecesini artırır */
+}

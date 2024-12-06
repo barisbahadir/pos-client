@@ -16,10 +16,10 @@ import {
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import { useDispatch } from 'react-redux'
-import ApiService from '../../ApiService'
+import ApiService from 'src/ApiService'
 import './Login.css'
 import { toast } from 'react-toastify'
-import { getErrorMessage } from '../../utils/Utils'
+import { getErrorMessage } from 'src/utils/Utils'
 
 const Login = () => {
   const [email, setEmail] = useState('zeliha')

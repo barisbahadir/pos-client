@@ -11,15 +11,15 @@ import {
   CContainer,
 } from '@coreui/react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import apiService from '../../ApiService'
+import apiService from 'src/ApiService'
 import { toast } from 'react-toastify'
-import LoadingBar from '../../components/LoadingBar'
+import LoadingBar from 'src/components/LoadingBar'
 
-import defaultProduct from './../../assets/images/product.png'
-import { getErrorMessage } from '../../utils/Utils'
+import defaultProduct from 'src/assets/images/product.png'
+import { getErrorMessage } from 'src/utils/Utils'
 import { useNavigate } from 'react-router-dom'
 
-const ItemCards = () => {
+const CategoryList = () => {
   const navigate = useNavigate()
 
   const [isLoading, setLoading] = useState(false)
@@ -280,6 +280,7 @@ const ItemCards = () => {
                           >
                             <CButton
                               color="info"
+                              className="info-button"
                               size="sm"
                               onClick={() =>
                                 console.log(item.id + ' edit button clicked: ' + item.name)
@@ -312,4 +313,4 @@ const ItemCards = () => {
   )
 }
 
-export default ItemCards
+export default CategoryList

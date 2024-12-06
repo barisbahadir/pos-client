@@ -17,7 +17,7 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-import user from './../../assets/images/avatars/user.jpg'
+import user from 'src/assets/images/avatars/user.jpg'
 
 const AppHeaderDropdown = () => {
   return (

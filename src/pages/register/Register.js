@@ -15,7 +15,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
-import ApiService from '../../ApiService'
+import ApiService from 'src/ApiService'
 import './Register.css'
 import { toast } from 'react-toastify'
 

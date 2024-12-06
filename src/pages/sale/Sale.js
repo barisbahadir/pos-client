@@ -16,11 +16,11 @@ import {
 } from '@coreui/react'
 import './Sale.css'
 import { FaShoppingCart } from 'react-icons/fa'
-import ApiService from '../../ApiService'
-import LoadingBar from '../../components/LoadingBar'
+import ApiService from 'src/ApiService'
+import LoadingBar from 'src/components/LoadingBar'
 import { toast } from 'react-toastify'
 import { AiOutlineBarcode } from 'react-icons/ai'
-import { getErrorMessage, getFormattedDateTimeNow } from '../../utils/Utils'
+import { getErrorMessage, getFormattedDateTimeNow } from 'src/utils/Utils'
 import { useNavigate } from 'react-router-dom'
 
 const Sale = () => {

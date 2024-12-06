@@ -20,8 +20,8 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { toast } from 'react-toastify'
-import { getErrorMessage } from '../../../utils/Utils'
-import ApiService from '../../../ApiService'
+import { generateBarcodeNumber, getErrorMessage } from 'src/utils/Utils'
+import ApiService from 'src/ApiService'
 import { AiOutlineBarcode, AiOutlineDollar } from 'react-icons/ai'
 import { FaBarcode } from 'react-icons/fa'
 import './AddProduct.css'
@@ -133,6 +133,11 @@ const AddProduct = () => {
     }
   }
 
+  const handleCreateBarcodeNumber = () => {
+    const barcodeNumber = generateBarcodeNumber()
+    setValue('barcode', barcodeNumber)
+  }
+
   return (
     <CContainer className="pos-container">
       <CCard>
@@ -199,9 +204,14 @@ const AddProduct = () => {
                   Barkod
                 </CFormLabel>
                 <CInputGroup>
-                  <CInputGroupText>
-                    <FaBarcode size="1.5em" />
-                  </CInputGroupText>
+                  <CTooltip content="Barkod oluştur" placement="top">
+                    <CInputGroupText
+                      onClick={handleCreateBarcodeNumber}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <FaBarcode size="1.5em" />
+                    </CInputGroupText>
+                  </CTooltip>
                   <CFormInput
                     id="barcode"
                     type="text"
@@ -269,14 +279,14 @@ const AddProduct = () => {
                 <CFormLabel className="d-block">Resim Önizleme</CFormLabel>
                 <div
                   style={{
-                    border: '1px solid #ced4da',
+                    border: '1px solid #dbdfe6',
                     borderRadius: '5px',
                     padding: '10px',
                     height: '150px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    backgroundColor: '#f8f9fa',
+                    // backgroundColor: '#f8f9fa',
                   }}
                 >
                   {imageBase64 ? (
