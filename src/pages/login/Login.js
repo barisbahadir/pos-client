@@ -22,8 +22,8 @@ import { toast } from 'react-toastify'
 import { getErrorMessage } from 'src/utils/Utils'
 
 const Login = () => {
-  const [email, setEmail] = useState('zeliha')
-  const [password, setPassword] = useState('zeliha')
+  const [email, setEmail] = useState('bahadir')
+  const [password, setPassword] = useState('bahadir')
   const [error, setError] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
