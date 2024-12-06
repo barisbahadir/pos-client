@@ -63,7 +63,7 @@
   margin-bottom: 10px; /* Alt boşluk */
   position: relative;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
 }
@@ -205,9 +205,9 @@
 
 .cart-panel .cart-footer {
   padding: 15px;
-  border-radius: 5px;
-  border-top: 1px solid #ddd;
-  background-color: #f8f9fa;
+  /* border-radius: 5px; */
+  border-top: 1.5px solid #ddd;
+  /* background-color: #f8f9fa; */
 }
 
 /* Sepet ürün listesi */
