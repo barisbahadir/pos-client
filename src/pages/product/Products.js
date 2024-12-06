@@ -99,7 +99,7 @@ const ItemCards = () => {
                             borderRadius: '15px',
                             padding: '10px',
                             paddingRight: '15px',
-                            background: '#fff',
+                            background: '#ffffffd1',
                             gap: '10px',
                             // boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                           }}
@@ -110,7 +110,7 @@ const ItemCards = () => {
                             style={{
                               fontSize: '24px',
                               cursor: 'grab',
-                              color: '#black',
+                              color: '#080a0c',
                               display: 'flex',
                               alignItems: 'center',
                               justifyContent: 'center',
@@ -149,6 +149,7 @@ const ItemCards = () => {
                             <p
                               style={{
                                 fontSize: '15px',
+                                color: '#080a0c',
                                 margin: 0,
                                 marginBottom: '5px',
                                 fontWeight: 'bold',
