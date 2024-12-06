@@ -28,7 +28,6 @@ const Sale = () => {
 
   const [isLoading, setLoading] = useState(false)
   const [isSaveLoading, setSaveLoading] = useState(false)
-  const [error, setError] = useState(null)
   const [data, setData] = useState([])
 
   const [selectedCategoryId, setSelectedCategoryId] = useState(1)

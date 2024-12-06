@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CCard,
   CCardBody,
@@ -11,30 +11,60 @@ import {
   CContainer,
 } from '@coreui/react'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import apiService from '../../ApiService'
+import { toast } from 'react-toastify'
+import LoadingBar from '../../components/LoadingBar'
 
-// Rastgele ürün verisi oluşturma fonksiyonu
-const generateRandomItems = (n) => {
-  const items = []
-
-  for (let i = 0; i < n; i++) {
-    const index = i + 1
-    const randomItem = {
-      name: 'Urun ' + index + ' ismi',
-      id: index,
-      barcode: Math.random().toString(36).substr(2, 9),
-      price: (Math.random() * 1000).toFixed(2),
-      stockQuantity: Math.floor(Math.random() * 1000) + 1,
-      orderValue: 1,
-      image: 'https://i0.shbdn.com/photos/54/97/64/x5_1209549764jar.jpg',
-    }
-    items.push(randomItem)
-  }
-
-  return items
-}
+import defaultProduct from './../../assets/images/product.png'
+import { getErrorMessage } from '../../utils/Utils'
+import { useNavigate } from 'react-router-dom'
 
 const ItemCards = () => {
-  const [items, setItems] = useState(generateRandomItems(12))
+  const navigate = useNavigate()
+
+  const [isLoading, setLoading] = useState(false)
+  const [selectedCategoryId, setSelectedCategoryId] = useState()
+
+  const [categories, setCategories] = useState([])
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const filteredData = categories.filter((cat) => cat.id === selectedCategoryId)
+    if (
+      filteredData !== undefined &&
+      Array.isArray(filteredData) &&
+      filteredData[0] !== undefined &&
+      Array.isArray(filteredData[0].products)
+    ) {
+      setProducts(filteredData[0].products)
+    }
+  }, [selectedCategoryId])
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        setLoading(true)
+        const response = await apiService.get('/api/category/list')
+        if (response != null && response != undefined && Array.isArray(response)) {
+          setCategories(response)
+
+          if (response[0]) {
+            setSelectedCategoryId(response[0].id)
+          }
+        }
+      } catch (err) {
+        toast.error(getErrorMessage(err))
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchCategories()
+  }, [])
+
+  const handleCategoryClick = (categoryId) => {
+    setSelectedCategoryId(categoryId)
+  }
 
   // Kartların sırasını değiştirme fonksiyonu
   const onDragEnd = (result) => {
@@ -43,13 +73,40 @@ const ItemCards = () => {
 
     if (destination.index === source.index) return // Aynı yerde bırakma yapılırsa işlem yapma
 
-    const reorderedItems = Array.from(items)
+    const reorderedItems = Array.from(products)
     const [movedItem] = reorderedItems.splice(source.index, 1) // Taşınan öğeyi çıkar
     reorderedItems.splice(destination.index, 0, movedItem) // Taşınan öğeyi yeni konumda ekle
 
-    console.log('Yeni siralanmis items: \n' + reorderedItems.map((c) => `\n Urun ${c.id}`))
+    setProducts(reorderedItems) // Yeni sıralamayı set et
+  }
 
-    setItems(reorderedItems) // Yeni sıralamayı set et
+  // Handle form submission
+  const onSubmit = async (data) => {
+    setLoading(true)
+
+    const parameters = {
+      categoryId: selectedCategoryId,
+      orderedValues: products.map((p, i) => {
+        const prod = {
+          id: p.id,
+          orderValue: i + 1,
+        }
+        return prod
+      }),
+    }
+
+    try {
+      const response = await apiService.post('/api/product/order-update', parameters)
+
+      if (response) {
+        toast.success(`Urunlerin siralamasi kaydedildi`)
+        navigate('/home')
+      }
+    } catch (err) {
+      toast.error(getErrorMessage(err))
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -64,9 +121,47 @@ const ItemCards = () => {
             <CCardBody>
               Satis ekraninda gosterilecek siralamayi belirleyebilir ve asagidaki Siralamayi Kaydet
               butonuyla degistirdiginiz siralamayi kaydedebilirsiniz.
-              <CButton color="warning" className="mt-3 w-100">
+              <CButton
+                color="warning"
+                className="mt-3 w-100"
+                onClick={onSubmit}
+                disabled={isLoading}
+              >
                 Sıralamayı Kaydet
               </CButton>
+            </CCardBody>
+          </CCard>
+          <CCard className="mb-3">
+            <CCardHeader>Kategoriler</CCardHeader>
+            <CCardBody className="category-panel">
+              {isLoading ? (
+                <LoadingBar />
+              ) : (
+                <>
+                  <div className="d-flex flex-column gap-2">
+                    {categories.map((category) => (
+                      <CButton
+                        key={category.id}
+                        className="category-label"
+                        style={{
+                          cursor: 'pointer',
+                          padding: '10px',
+                          borderRadius: '5px',
+                          backgroundColor:
+                            selectedCategoryId === category.id ? '#007bff' : '#f0f0f0', // Seçili kategori rengi
+                          color: selectedCategoryId === category.id ? 'white' : '#333',
+                          textOverflow: 'ellipsis',
+                          overflow: 'hidden',
+                          whiteSpace: 'nowrap',
+                        }}
+                        onClick={() => handleCategoryClick(category.id)} // Kategori tıklandığında state değişecek
+                      >
+                        {category.name}
+                      </CButton>
+                    ))}
+                  </div>
+                </>
+              )}
             </CCardBody>
           </CCard>
         </CCol>
@@ -85,7 +180,7 @@ const ItemCards = () => {
                     gap: '10px',
                   }}
                 >
-                  {items.map((item, index) => (
+                  {products.map((item, index) => (
                     <Draggable key={item.id} draggableId={`item-${item.id}`} index={index}>
                       {(provided) => (
                         <div
@@ -104,7 +199,6 @@ const ItemCards = () => {
                             // boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
                           }}
                         >
-                          {/* Sürükleme İkonu */}
                           <div
                             {...provided.dragHandleProps}
                             style={{
@@ -121,25 +215,26 @@ const ItemCards = () => {
                           >
                             ⋮⋮
                           </div>
-
-                          {/* Resim */}
                           <div
                             style={{
-                              maxWidth: '130px',
-                              maxHeight: '150px',
+                              width: '120px',
+                              height: '100px',
                               overflow: 'hidden',
                               border: '1px solid #ddd',
                               borderRadius: '10px',
+                              backgroundColor: '#ffffffd1', // Gri arka plan
+                              display: 'flex',
+                              justifyContent: 'center',
+                              alignItems: 'center',
                             }}
                           >
                             <CImage
-                              src={item.image}
+                              src={!!item.image ? item.image : defaultProduct}
                               alt={item.name}
-                              fluid
                               style={{
-                                objectFit: 'cover',
-                                width: '100%',
-                                height: '100%',
+                                objectFit: 'contain', // Görüntüyü çerçeveye orantılı sığdır
+                                maxWidth: '100%',
+                                maxHeight: '100%',
                               }}
                             />
                           </div>
@@ -166,8 +261,6 @@ const ItemCards = () => {
                               Fiyat: <b>{item.price}</b> TL
                             </p>
                           </div>
-
-                          {/* Butonlar */}
                           <div
                             style={{
                               display: 'flex',

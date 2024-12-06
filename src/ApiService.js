@@ -69,11 +69,11 @@ const request = async (method, url, data = {}, params = {}) => {
   }
 }
 
-const ApiService = {
+const apiService = {
   get: (url, params = {}) => request('get', url, {}, params),
   post: (url, data) => request('post', url, data),
   put: (url, data) => request('put', url, data),
   delete: (url) => request('delete', url),
 }
 
-export default ApiService
+export default apiService
