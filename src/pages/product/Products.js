@@ -40,27 +40,35 @@ const ItemCards = () => {
     }
   }, [selectedCategoryId])
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        setLoading(true)
-        const response = await apiService.get('/api/category/list')
-        if (response != null && response != undefined && Array.isArray(response)) {
-          setCategories(response)
+  // API'den kategorileri alma
+  // Kategorileri getiren fonksiyon
+  const fetchCategories = async () => {
+    try {
+      setLoading(true)
+      const response = await apiService.get('/api/category/list')
+      if (response != null && response != undefined && Array.isArray(response)) {
+        setCategories(response)
 
-          if (response[0]) {
-            setSelectedCategoryId(response[0].id)
-          }
+        if (response[0]) {
+          setSelectedCategoryId(response[0].id)
         }
-      } catch (err) {
-        toast.error(getErrorMessage(err))
-      } finally {
-        setLoading(false)
       }
+    } catch (err) {
+      toast.error(getErrorMessage(err))
+    } finally {
+      setLoading(false)
     }
+  }
 
-    fetchCategories()
-  }, [])
+  // useEffect ile sayfa ilk yüklediğinde çalıştırılacak
+  useEffect(() => {
+    fetchCategories() // Sayfa yüklendiğinde kategori listesi alınıyor
+  }, []) // Boş bağımlılık dizisi, sadece bir kez çalışmasını sağlar
+
+  // Manuel tetikleme için bir buton
+  const handleManualFetch = async () => {
+    await fetchCategories() // Kullanıcı butona tıkladığında da kategori listesini al
+  }
 
   const handleCategoryClick = (categoryId) => {
     setSelectedCategoryId(categoryId)
@@ -100,12 +108,13 @@ const ItemCards = () => {
 
       if (response) {
         toast.success(`Urunlerin siralamasi kaydedildi`)
-        navigate('/home')
+        // navigate('/home')
       }
     } catch (err) {
       toast.error(getErrorMessage(err))
     } finally {
       setLoading(false)
+      await fetchCategories()
     }
   }
 
