@@ -40,6 +40,21 @@ const ProductList = () => {
     }
   }, [selectedCategoryId])
 
+  const deleteProductById = async (id, name) => {
+    try {
+      setLoading(true)
+      const response = await apiService.post('/api/product/delete/' + id)
+      if (response) {
+        toast.success(`${name} adli urun silindi.`)
+      }
+    } catch (err) {
+      toast.error(getErrorMessage(err))
+    } finally {
+      setLoading(false)
+      await fetchCategories()
+    }
+  }
+
   // API'den kategorileri alma
   // Kategorileri getiren fonksiyon
   const fetchCategories = async () => {
@@ -293,9 +308,7 @@ const ProductList = () => {
                             <CButton
                               color="danger"
                               size="sm"
-                              onClick={() =>
-                                console.log(item.id + ' delete button clicked: ' + item.name)
-                              }
+                              onClick={() => deleteProductById(item.id, item.name)}
                             >
                               Sil
                             </CButton>

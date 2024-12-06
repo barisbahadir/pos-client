@@ -20,6 +20,21 @@ const CategoryList = () => {
   const [isLoading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
 
+  const deleteCategoryById = async (id, name) => {
+    try {
+      setLoading(true)
+      const response = await apiService.post('/api/category/delete/' + id)
+      if (response) {
+        toast.success(`${name} adli kategori silindi.`)
+      }
+    } catch (err) {
+      toast.error(getErrorMessage(err))
+    } finally {
+      setLoading(false)
+      await fetchCategories()
+    }
+  }
+
   const fetchCategories = async () => {
     try {
       setLoading(true)
@@ -229,9 +244,7 @@ const CategoryList = () => {
                             <CButton
                               color="danger"
                               size="sm"
-                              onClick={() =>
-                                console.log(item.id + ' delete button clicked: ' + item.name)
-                              }
+                              onClick={() => deleteCategoryById(item.id, item.name)}
                             >
                               Sil
                             </CButton>
