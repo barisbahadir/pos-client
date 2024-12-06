@@ -98,7 +98,7 @@ const ItemCards = () => {
                             border: '1px solid #ddd',
                             borderRadius: '15px',
                             padding: '10px',
-                            paddingRight: '12px',
+                            paddingRight: '15px',
                             background: '#fff',
                             gap: '10px',
                             // boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
@@ -115,6 +115,8 @@ const ItemCards = () => {
                               alignItems: 'center',
                               justifyContent: 'center',
                               width: '10px',
+                              paddingLeft: '8px',
+                              paddingRight: '6px',
                             }}
                           >
                             ⋮⋮

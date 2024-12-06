@@ -60,7 +60,7 @@ const Login = () => {
                 <CCardBody>
                   <CForm onSubmit={handleLogin}>
                     <h1 className="text-center mb-4" style={{ fontSize: '2rem' }}>
-                      BAHADIR POS
+                      <b>BAHADIR</b> POS
                     </h1>
                     <p className="text-body-secondary text-center mb-4">Sisteme Giriş Yapın</p>
                     {error && <div className="alert alert-danger text-center">{error}</div>}

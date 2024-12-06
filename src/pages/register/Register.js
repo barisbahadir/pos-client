@@ -65,7 +65,7 @@ const Register = () => {
                 <CCardBody>
                   <CForm onSubmit={handleRegister}>
                     <h1 className="text-center mb-4" style={{ fontSize: '2rem' }}>
-                      BAHADIR POS
+                      <b>BAHADIR</b> POS
                     </h1>
                     <p className="text-body-secondary text-center mb-4">Hesabınızı Oluşturun</p>
                     {error && <div className="alert alert-danger text-center">{error}</div>}
