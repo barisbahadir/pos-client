@@ -20,8 +20,8 @@ import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { toast } from 'react-toastify'
-import { getErrorMessage } from '../../utils/Utils'
-import ApiService from '../../ApiService'
+import { getErrorMessage } from '../../../utils/Utils'
+import ApiService from '../../../ApiService'
 import './AddCategory.css'
 import { useNavigate } from 'react-router-dom'
 
@@ -67,7 +67,7 @@ const AddCategory = () => {
   }
 
   return (
-    <CContainer className="pt-3" style={{ maxWidth: '800px' }}>
+    <CContainer className="pos-container">
       <CCard>
         <CCardHeader>
           <b>Kategori Ekle</b>
