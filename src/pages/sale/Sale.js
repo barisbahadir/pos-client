@@ -22,6 +22,8 @@ import { toast } from 'react-toastify'
 import { AiOutlineBarcode } from 'react-icons/ai'
 import { getErrorMessage, getFormattedDateTimeNow } from 'src/utils/Utils'
 import PaymentTypes from 'src/utils/PaymentTypes'
+import CIcon from '@coreui/icons-react'
+import { cilCash, cilCreditCard } from '@coreui/icons'
 
 const Sale = () => {
   const [isLoading, setLoading] = useState(false)
@@ -83,9 +85,9 @@ const Sale = () => {
   const handleFastPriceProduct = (price) => {
     const product = {
       id: Math.random(),
-      name: price + ' TL Fiyatli Urun',
+      name: `${price} TL Fiyatli Urun`,
       price: price,
-      imageUrl: '',
+      barcode: `CUSTOM-${price}`,
     }
     const cardItem = { ...product, quantity: 1 }
 
@@ -198,7 +200,7 @@ const Sale = () => {
     }
   }
 
-  const handleSubmit = () => {
+  const handleCustomProductAdd = () => {
     const numberValue = Number(fastPriceValue)
     handleFastPriceProduct(isNaN(numberValue) ? 1 : numberValue)
     handleFastPriceModalShow(false) // Modal'ı kapat
@@ -433,7 +435,7 @@ const Sale = () => {
                   </CButton>
                 </CCol>
               </CRow> */}
-              <CRow className="fw-bold mt-2" sm={{ gutterX: 2 }}>
+              <CRow className="fw-bold mt-2" xs={{ gutterX: 2 }}>
                 <CCol xs="6">
                   <CButton
                     color="danger"
@@ -455,25 +457,29 @@ const Sale = () => {
                   </CButton>
                 </CCol>
               </CRow>
-              <CRow className="fw-bold mt-2" sm={{ gutterX: 2 }}>
+              <CRow className="fw-bold mt-2" xs={{ gutterX: 2 }}>
                 <CCol xs="6">
                   <CButton
                     color="success"
-                    className="w-100"
+                    className="w-100 d-flex align-items-center justify-content-center"
+                    style={{ height: '50px' }} // Yükseklik ayarı
                     disabled={cart.length === 0 || isSaveLoading}
                     onClick={() => handleSaveTransaction(PaymentTypes.CASH)}
                   >
+                    <CIcon icon={cilCash} className="me-2" /> {/* Nakit için ikon */}
                     Nakit
                   </CButton>
                 </CCol>
                 <CCol xs="6">
                   <CButton
                     color="warning"
-                    className="w-100"
+                    className="w-100 d-flex align-items-center justify-content-center"
+                    style={{ height: '50px' }} // Yükseklik ayarı
                     disabled={cart.length === 0 || isSaveLoading}
                     onClick={() => handleSaveTransaction(PaymentTypes.CARD)}
                   >
-                    Kredi Karti
+                    <CIcon icon={cilCreditCard} className="me-2" /> {/* Kart için ikon */}
+                    Kredi Kartı
                   </CButton>
                 </CCol>
               </CRow>
@@ -518,7 +524,7 @@ const Sale = () => {
               </CButton>
             </CCol>
             <CCol xs="8" className="text-end">
-              <CButton color="info" onClick={() => handleSubmit()}>
+              <CButton color="info" onClick={() => handleCustomProductAdd()}>
                 Urun Ekle
               </CButton>
             </CCol>
