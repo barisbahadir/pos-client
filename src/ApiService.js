@@ -42,7 +42,7 @@ api.interceptors.response.use(
   },
   (error) => {
     // Hata kodu 401 veya 403 ise kullanıcıyı giriş sayfasına yönlendirebiliriz
-    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+    if (error.response && error.response.status === 401 /* || error.response.status === 403*/) {
       // Token geçersiz veya süresi dolmuşsa, kullanıcıyı login sayfasına yönlendirebiliriz.
       localStorage.removeItem('token')
       window.location.href = '/logout'

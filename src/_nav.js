@@ -1,23 +1,15 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilBell,
-  cilBook,
   cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDescription,
-  cilDrop,
-  cilExternalLink,
   cilHome,
-  cilNotes,
+  cilList,
   cilPencil,
   cilPlus,
   cilPuzzle,
-  cilSpeedometer,
-  cilStar,
+  cilMoney,
 } from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { CNavItem, CNavTitle } from '@coreui/react'
 
 const _nav = [
   {
@@ -50,6 +42,22 @@ const _nav = [
   },
   {
     component: CNavTitle,
+    name: 'Urun',
+  },
+  {
+    component: CNavItem,
+    name: 'Urunler',
+    to: '/products',
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Yeni Urun',
+    to: '/product/new',
+    icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavTitle,
     name: 'Kategori',
   },
   {
@@ -66,19 +74,19 @@ const _nav = [
   },
   {
     component: CNavTitle,
-    name: 'Urun',
+    name: 'RAPORLAR',
   },
   {
     component: CNavItem,
-    name: 'Urunler',
-    to: '/products',
-    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    name: 'Satislar',
+    to: '/reports/sale',
+    icon: <CIcon icon={cilList} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Yeni Urun',
-    to: '/product/new',
-    icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+    name: 'Gunsonu',
+    to: '/reports/z',
+    icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
   },
   /*{
     component: CNavTitle,

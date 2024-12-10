@@ -2,10 +2,17 @@ import React from 'react'
 
 const Dashboard = React.lazy(() => import('./pages/dashboard/Dashboard'))
 const Sale = React.lazy(() => import('./pages/sale/Sale'))
+
+//CATEGORIES
 const CategoryList = React.lazy(() => import('./pages/category/category-list/CategoryList'))
 const AddCategory = React.lazy(() => import('./pages/category/add-category/AddCategory'))
+
+// PRODUCTS
 const ProductList = React.lazy(() => import('./pages/product/product-list/ProductList'))
 const AddProduct = React.lazy(() => import('./pages/product/add-product/AddProduct'))
+
+//REPORTS
+const SaleReports = React.lazy(() => import('./pages/reports/sale-reports/SaleReports'))
 
 // // Core UI
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -66,6 +73,8 @@ const routes = [
   { path: '/category/new', name: 'Yeni Kategori', element: AddCategory },
   { path: '/products', name: 'Urunler', element: ProductList },
   { path: '/product/new', name: 'Yeni Urun', element: AddProduct },
+  { path: '/reports/sale', name: 'Satislar', element: SaleReports },
+  { path: '/reports/x', name: 'Gunsonu', element: SaleReports },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },
