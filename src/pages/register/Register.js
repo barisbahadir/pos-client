@@ -20,6 +20,7 @@ import './Register.css'
 import { toast } from 'react-toastify'
 
 const Register = () => {
+  const [isLoading, setLoading] = useState(false)
   // Form verilerini state olarak yönetiyoruz
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -29,9 +30,9 @@ const Register = () => {
 
   // Kayıt işlemi
   const handleRegister = async (e) => {
-    setError('')
     e.preventDefault()
-
+    setError('')
+    setLoading(true)
     // Şifre ve şifre tekrarı kontrolü
     if (password !== confirmPassword) {
       setError('Şifreler eşleşmiyor.')
@@ -52,6 +53,8 @@ const Register = () => {
       }
     } catch (err) {
       setError(getErrorMessage(err))
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -103,7 +106,7 @@ const Register = () => {
                       />
                     </CInputGroup>
                     <div className="d-grid">
-                      <CButton color="warning" type="submit">
+                      <CButton color="warning" type="submit" disabled={isLoading}>
                         Hesap Oluştur
                       </CButton>
                     </div>
@@ -116,7 +119,13 @@ const Register = () => {
                     <h2 className="text-white mb-3">Zaten Hesabınız Var mı?</h2>
                     <p>Giriş yaparak hesabınıza erişebilirsiniz.</p>
                     <Link to="/login">
-                      <CButton color="light" className="mt-3" active tabIndex={-1}>
+                      <CButton
+                        color="light"
+                        className="mt-3"
+                        active
+                        tabIndex={-1}
+                        disabled={isLoading}
+                      >
                         Giriş Yap!
                       </CButton>
                     </Link>

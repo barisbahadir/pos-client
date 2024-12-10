@@ -22,6 +22,7 @@ import apiService from 'src/ApiService'
 import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
 import { getErrorMessage } from 'src/utils/Utils'
+import PaymentTypes from 'src/utils/PaymentTypes'
 
 const ZReports = () => {
   const filterStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1))
@@ -59,6 +60,10 @@ const ZReports = () => {
     fetchTransactions()
   }, [])
 
+  useEffect(() => {
+    fetchTransactions()
+  }, [startDate, endDate])
+
   return isLoading ? (
     <LoadingBar />
   ) : (
@@ -67,9 +72,9 @@ const ZReports = () => {
         <CCardHeader className="mb-4">Gün Sonu Raporları</CCardHeader>
         <CCardBody>
           <div>
-            <CRow className="align-items-center mb-4">
+            <CRow className="align-items-center">
               {/* Tarih Aralığı Seçimi */}
-              <CCol xs={12} md={6} className="mb-3 mb-md-0">
+              <CCol md={6} className="me-auto mb-4">
                 <CInputGroup>
                   <CInputGroupText>Tarih Aralığı</CInputGroupText>
                   <CFormInput
@@ -86,17 +91,21 @@ const ZReports = () => {
               </CCol>
 
               {/* Arama ve Filtre Butonu */}
-              <CCol xs={12} md={4} className="mb-3 mb-md-0">
-                <CFormInput
-                  placeholder="Ara..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                />
-              </CCol>
-              <CCol xs={12} md={2}>
-                <CButton color="warning" className="w-100" onClick={fetchTransactions}>
-                  Filtrele
-                </CButton>
+              <CCol md={4} className="ms-auto mb-4">
+                <CInputGroup>
+                  <CFormInput
+                    placeholder="Ara..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                  />
+                  <CButton
+                    color="warning"
+                    onClick={fetchTransactions}
+                    className="d-flex align-items-center justify-content-center"
+                  >
+                    Filtrele
+                  </CButton>
+                </CInputGroup>
               </CCol>
             </CRow>
 
@@ -106,6 +115,7 @@ const ZReports = () => {
                 <CTableRow>
                   <CTableHeaderCell>Kayit No</CTableHeaderCell>
                   <CTableHeaderCell>Satış Tarihi</CTableHeaderCell>
+                  <CTableHeaderCell>Odeme Tipi</CTableHeaderCell>
                   <CTableHeaderCell>Satış Tutarı</CTableHeaderCell>
                   <CTableHeaderCell>Detay</CTableHeaderCell>
                 </CTableRow>
@@ -116,6 +126,9 @@ const ZReports = () => {
                     <CTableRow>
                       <CTableDataCell>{transaction.id}</CTableDataCell>
                       <CTableDataCell>{transaction.transactionDate}</CTableDataCell>
+                      <CTableDataCell>
+                        {transaction.paymentType === PaymentTypes.CARD ? 'Kredi Karti' : 'Nakit'}
+                      </CTableDataCell>
                       <CTableDataCell>
                         <b>{`${transaction.totalAmount} TL`}</b>
                       </CTableDataCell>

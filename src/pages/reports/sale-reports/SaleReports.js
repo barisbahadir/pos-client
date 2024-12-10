@@ -60,6 +60,10 @@ const SaleReports = () => {
     fetchTransactions()
   }, [])
 
+  useEffect(() => {
+    fetchTransactions()
+  }, [startDate, endDate])
+
   return isLoading ? (
     <LoadingBar />
   ) : (
@@ -68,9 +72,9 @@ const SaleReports = () => {
         <CCardHeader className="mb-4">Satış Raporları</CCardHeader>
         <CCardBody>
           <div>
-            <CRow className="align-items-center mb-4">
+            <CRow className="align-items-center">
               {/* Tarih Aralığı Seçimi */}
-              <CCol md={6} className="mb-3 mb-md-0">
+              <CCol md={6} className="me-auto mb-4">
                 <CInputGroup>
                   <CInputGroupText>Tarih Aralığı</CInputGroupText>
                   <CFormInput
@@ -87,17 +91,21 @@ const SaleReports = () => {
               </CCol>
 
               {/* Arama ve Filtre Butonu */}
-              <CCol md={4} className="mb-3 mb-md-0">
-                <CFormInput
-                  placeholder="Ara..."
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                />
-              </CCol>
-              <CCol md={2}>
-                <CButton color="warning" className="w-100" onClick={fetchTransactions}>
-                  Filtrele
-                </CButton>
+              <CCol md={4} className="ms-auto mb-4">
+                <CInputGroup>
+                  <CFormInput
+                    placeholder="Ara..."
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                  />
+                  <CButton
+                    color="warning"
+                    onClick={fetchTransactions}
+                    className="d-flex align-items-center justify-content-center"
+                  >
+                    Filtrele
+                  </CButton>
+                </CInputGroup>
               </CCol>
             </CRow>
 

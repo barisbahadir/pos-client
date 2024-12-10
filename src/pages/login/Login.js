@@ -22,6 +22,7 @@ import { toast } from 'react-toastify'
 import { getErrorMessage } from 'src/utils/Utils'
 
 const Login = () => {
+  const [isLoading, setLoading] = useState(false)
   const [email, setEmail] = useState('bahadir')
   const [password, setPassword] = useState('bahadir')
   const [error, setError] = useState(null)
@@ -31,6 +32,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault() // Formun gönderilmesini engelle
 
+    setLoading(true)
     try {
       const response = await ApiService.post('/api/auth/login', { email, password })
 
@@ -46,6 +48,8 @@ const Login = () => {
       }
     } catch (err) {
       setError(getErrorMessage(err))
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -85,7 +89,12 @@ const Login = () => {
                       />
                     </CInputGroup>
                     <div className="d-grid">
-                      <CButton type="submit" color="warning" className="px-4 w-100">
+                      <CButton
+                        type="submit"
+                        color="warning"
+                        className="px-4 w-100"
+                        disabled={isLoading}
+                      >
                         Giriş Yap
                       </CButton>
                     </div>
@@ -110,7 +119,13 @@ const Login = () => {
                     <h2 className="text-white mb-3">Kaydol</h2>
                     <p>Sisteme kaydolup, uygulamayı hızlıca kullanmaya başlayabilirsiniz.</p>
                     <Link to="/register">
-                      <CButton color="light" className="mt-3" active tabIndex={-1}>
+                      <CButton
+                        color="light"
+                        className="mt-3"
+                        active
+                        tabIndex={-1}
+                        disabled={isLoading}
+                      >
                         Hızla Kaydol!
                       </CButton>
                     </Link>
