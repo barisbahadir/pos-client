@@ -87,7 +87,6 @@ const CategoryList = () => {
 
       if (response) {
         toast.success(`Kategorilerin siralamasi kaydedildi.`)
-        // navigate('/home')
       }
     } catch (err) {
       toast.error(getErrorMessage(err))

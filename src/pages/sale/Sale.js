@@ -21,11 +21,9 @@ import LoadingBar from 'src/components/LoadingBar'
 import { toast } from 'react-toastify'
 import { AiOutlineBarcode } from 'react-icons/ai'
 import { getErrorMessage, getFormattedDateTimeNow } from 'src/utils/Utils'
-import { useNavigate } from 'react-router-dom'
+import PaymentTypes from 'src/utils/PaymentTypes'
 
 const Sale = () => {
-  const navigate = useNavigate()
-
   const [isLoading, setLoading] = useState(false)
   const [isSaveLoading, setSaveLoading] = useState(false)
   const [data, setData] = useState([])
@@ -206,11 +204,11 @@ const Sale = () => {
     handleFastPriceModalShow(false) // Modal'ı kapat
   }
 
-  const handleSaveTransaction = async (e) => {
-    e.preventDefault()
+  const handleSaveTransaction = async (paymentType) => {
     setSaveLoading(true)
     try {
       const cardData = {
+        paymentType: paymentType,
         transactionDate: getFormattedDateTimeNow(),
         transactionItems: cart.map((c) => {
           const item = {
@@ -423,7 +421,7 @@ const Sale = () => {
                   {total.toFixed(2)} TL
                 </CCol>
               </CRow>
-              <CRow>
+              {/* <CRow>
                 <CCol>
                   <CButton
                     color="info"
@@ -434,26 +432,48 @@ const Sale = () => {
                     Hizli Fiyat Ekle
                   </CButton>
                 </CCol>
-              </CRow>
+              </CRow> */}
               <CRow className="fw-bold mt-2" sm={{ gutterX: 2 }}>
-                <CCol xs="4">
+                <CCol xs="6">
                   <CButton
-                    color="warning"
+                    color="danger"
                     className="w-100"
                     disabled={cart.length === 0 || isSaveLoading}
                     onClick={() => setCart([])}
                   >
-                    Sil
+                    Sepeti Bosalt
                   </CButton>
                 </CCol>
-                <CCol xs="8" className="text-end">
+                <CCol xs="6">
+                  <CButton
+                    color="info"
+                    className="w-100"
+                    disabled={isSaveLoading}
+                    onClick={() => handleFastPriceModalShow(true)}
+                  >
+                    Hizli Fiyat
+                  </CButton>
+                </CCol>
+              </CRow>
+              <CRow className="fw-bold mt-2" sm={{ gutterX: 2 }}>
+                <CCol xs="6">
                   <CButton
                     color="success"
                     className="w-100"
                     disabled={cart.length === 0 || isSaveLoading}
-                    onClick={handleSaveTransaction}
+                    onClick={() => handleSaveTransaction(PaymentTypes.CASH)}
                   >
-                    SATIS YAP
+                    Nakit
+                  </CButton>
+                </CCol>
+                <CCol xs="6">
+                  <CButton
+                    color="warning"
+                    className="w-100"
+                    disabled={cart.length === 0 || isSaveLoading}
+                    onClick={() => handleSaveTransaction(PaymentTypes.CARD)}
+                  >
+                    Kredi Karti
                   </CButton>
                 </CCol>
               </CRow>

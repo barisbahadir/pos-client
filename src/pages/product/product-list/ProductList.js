@@ -123,7 +123,6 @@ const ProductList = () => {
 
       if (response) {
         toast.success(`Urunlerin siralamasi kaydedildi`)
-        // navigate('/home')
       }
     } catch (err) {
       toast.error(getErrorMessage(err))

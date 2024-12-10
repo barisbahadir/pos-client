@@ -32,17 +32,16 @@ const Login = () => {
     e.preventDefault() // Formun gönderilmesini engelle
 
     try {
-      const response = await ApiService.post('/api/auth/login', { email, password }) // email kullanıyoruz
+      const response = await ApiService.post('/api/auth/login', { email, password })
 
       // Başarılı giriş
       const { token } = response
       if (token) {
         toast.info('Hosgeldin ' + email)
 
-        // Token'ı localStorage'a kaydediyoruz
         localStorage.setItem('token', token)
+        dispatch({ type: 'login', token: token })
 
-        dispatch({ type: 'login', token: token }) // Redux store'a token'ı kaydet
         navigate('/sale') // Anasayfaya yönlendir
       }
     } catch (err) {

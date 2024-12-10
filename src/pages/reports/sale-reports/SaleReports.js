@@ -23,6 +23,7 @@ import apiService from 'src/ApiService'
 import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
 import { getErrorMessage } from 'src/utils/Utils'
+import PaymentTypes from 'src/utils/PaymentTypes'
 
 const SaleReports = () => {
   const filterStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1))
@@ -107,6 +108,7 @@ const SaleReports = () => {
                 <CTableRow>
                   <CTableHeaderCell>Kayit No</CTableHeaderCell>
                   <CTableHeaderCell>Satış Tarihi</CTableHeaderCell>
+                  <CTableHeaderCell>Odeme Tipi</CTableHeaderCell>
                   <CTableHeaderCell>Satış Tutarı</CTableHeaderCell>
                   <CTableHeaderCell>Detay</CTableHeaderCell>
                 </CTableRow>
@@ -117,6 +119,9 @@ const SaleReports = () => {
                     <CTableRow>
                       <CTableDataCell>{transaction.id}</CTableDataCell>
                       <CTableDataCell>{transaction.transactionDate}</CTableDataCell>
+                      <CTableDataCell>
+                        {transaction.paymentType === PaymentTypes.CARD ? 'Kredi Karti' : 'Nakit'}
+                      </CTableDataCell>
                       <CTableDataCell>
                         <b>{`${transaction.totalAmount} TL`}</b>
                       </CTableDataCell>
