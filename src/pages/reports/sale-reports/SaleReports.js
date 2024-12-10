@@ -18,7 +18,6 @@ import {
   CCardBody,
   CCol,
 } from '@coreui/react'
-import '@coreui/coreui/dist/css/coreui.min.css'
 import apiService from 'src/ApiService'
 import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
