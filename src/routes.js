@@ -13,6 +13,7 @@ const AddProduct = React.lazy(() => import('./pages/product/add-product/AddProdu
 
 //REPORTS
 const SaleReports = React.lazy(() => import('./pages/reports/sale-reports/SaleReports'))
+const ZReports = React.lazy(() => import('./pages/reports/z-reports/ZReports'))
 
 // // Core UI
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -68,13 +69,13 @@ const SaleReports = React.lazy(() => import('./pages/reports/sale-reports/SaleRe
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/home', name: 'Anasayfa', element: Dashboard },
-  { path: '/sale', name: 'Satis Ekrani', element: Sale },
+  { path: '/sale', name: 'Satış Ekranı', element: Sale },
   { path: '/categories', name: 'Kategoriler', element: CategoryList },
   { path: '/category/new', name: 'Yeni Kategori', element: AddCategory },
   { path: '/products', name: 'Urunler', element: ProductList },
   { path: '/product/new', name: 'Yeni Urun', element: AddProduct },
-  { path: '/reports/sale', name: 'Satislar', element: SaleReports },
-  { path: '/reports/x', name: 'Gunsonu', element: SaleReports },
+  { path: '/reports/sale', name: 'Satış Raporları', element: SaleReports },
+  { path: '/reports/z', name: 'Gün Sonu Raporları', element: ZReports },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },

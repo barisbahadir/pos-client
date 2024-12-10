@@ -78,13 +78,13 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Satislar',
+    name: 'Satış Raporları',
     to: '/reports/sale',
     icon: <CIcon icon={cilList} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
-    name: 'Gunsonu',
+    name: 'Gün Sonu',
     to: '/reports/z',
     icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
   },

@@ -24,7 +24,7 @@ import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
 import { getErrorMessage } from 'src/utils/Utils'
 
-const SaleReports = () => {
+const ZReports = () => {
   const filterStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1))
     .toISOString()
     .split('T')[0]
@@ -65,12 +65,12 @@ const SaleReports = () => {
   ) : (
     <CContainer className="pos-container">
       <CCard className="mb-4">
-        <CCardHeader className="mb-4">Satış Raporları</CCardHeader>
+        <CCardHeader className="mb-4">Gün Sonu Raporları</CCardHeader>
         <CCardBody>
           <div>
             <CRow className="align-items-center mb-4">
               {/* Tarih Aralığı Seçimi */}
-              <CCol md={6} className="mb-3 mb-md-0">
+              <CCol xs={12} md={6} className="mb-3 mb-md-0">
                 <CInputGroup>
                   <CInputGroupText>Tarih Aralığı</CInputGroupText>
                   <CFormInput
@@ -87,14 +87,14 @@ const SaleReports = () => {
               </CCol>
 
               {/* Arama ve Filtre Butonu */}
-              <CCol md={4} className="mb-3 mb-md-0">
+              <CCol xs={12} md={4} className="mb-3 mb-md-0">
                 <CFormInput
                   placeholder="Ara..."
                   value={searchText}
                   onChange={(e) => setSearchText(e.target.value)}
                 />
               </CCol>
-              <CCol md={2}>
+              <CCol xs={12} md={2}>
                 <CButton color="warning" className="w-100" onClick={fetchTransactions}>
                   Filtrele
                 </CButton>
@@ -172,4 +172,4 @@ const SaleReports = () => {
   )
 }
 
-export default SaleReports
+export default ZReports
