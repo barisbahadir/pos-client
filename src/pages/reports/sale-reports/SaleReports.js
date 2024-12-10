@@ -63,7 +63,7 @@ const SaleReports = () => {
   return isLoading ? (
     <LoadingBar />
   ) : (
-    <CContainer className="pos-container">
+    <CContainer fluid>
       <CCard className="mb-4">
         <CCardHeader className="mb-4">Satış Raporları</CCardHeader>
         <CCardBody>
