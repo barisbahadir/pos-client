@@ -1,3 +1,33 @@
+import jwt_decode from 'jwt-decode'
+
+export const isJwtTokenValid = (token) => {
+  if (!token) return false
+
+  try {
+    const decoded = jwt_decode(token)
+    const expirationTime = decoded.exp * 1000 // Exp zamanını milisaniye cinsinden al
+    const currentTime = Date.now()
+
+    return currentTime < expirationTime // Geçerli mi?
+  } catch (error) {
+    console.error('Token çözülürken hata oluştu:', error)
+    return false
+  }
+}
+
+export const getJwtDetails = (token) => {
+  if (!token) return null
+
+  try {
+    const decoded = jwt_decode(token)
+    console.log(decoded)
+    return decoded
+  } catch (error) {
+    console.error('Token detaylari getirilirken hata oluştu:', error)
+    return null
+  }
+}
+
 export const getErrorMessage = (err) => {
   // Hata objesinin response kısmını kontrol et
   if (err.response) {

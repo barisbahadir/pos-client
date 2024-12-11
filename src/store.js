@@ -14,7 +14,7 @@ const changeState = (state = initialState, { type, ...rest }) => {
   switch (type) {
     case 'set':
       return { ...state, ...rest }
-      case 'login': // Oturum açma işlemi
+    case 'login': // Oturum açma işlemi
       localStorage.setItem('token', rest.token)
       return { ...state, token: rest.token }
     case 'logout': // Oturum kapatma işlemi

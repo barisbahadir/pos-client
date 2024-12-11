@@ -20,6 +20,7 @@ import ApiService from 'src/ApiService'
 import './Login.css'
 import { toast } from 'react-toastify'
 import { getErrorMessage } from 'src/utils/Utils'
+import { getJwtDetails } from '../../utils/Utils'
 
 const Login = () => {
   const [isLoading, setLoading] = useState(false)
@@ -40,7 +41,7 @@ const Login = () => {
       const { token } = response
       if (token) {
         toast.info('Hosgeldin ' + email)
-
+        const jwtDetails = getJwtDetails(token)
         localStorage.setItem('token', token)
         dispatch({
           type: 'login',
