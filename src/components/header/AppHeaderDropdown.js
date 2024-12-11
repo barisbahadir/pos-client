@@ -17,15 +17,19 @@ import {
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
-import user from 'src/assets/images/avatars/user.jpg'
+import userImage from 'src/assets/images/avatars/user.jpg'
+import { useSelector } from 'react-redux'
 
 const AppHeaderDropdown = () => {
+  const user = useSelector((state) => state.user)
+
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
-        <CAvatar src={user} size="md" />
+        <CAvatar src={userImage} size="md" />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
+        <CDropdownHeader className="bg-body-primary fw-semibold mt-2">{`Merhaba ${user.email}`}</CDropdownHeader>
         <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">Account</CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilBell} className="me-2" />

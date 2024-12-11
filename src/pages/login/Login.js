@@ -42,7 +42,11 @@ const Login = () => {
         toast.info('Hosgeldin ' + email)
 
         localStorage.setItem('token', token)
-        dispatch({ type: 'login', token: token })
+        dispatch({
+          type: 'login',
+          user: { email: response.email, role: response.role },
+          token: token,
+        })
 
         navigate('/sale') // Anasayfaya yönlendir
       }

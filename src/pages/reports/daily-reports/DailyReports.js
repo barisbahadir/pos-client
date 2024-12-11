@@ -22,7 +22,6 @@ import apiService from 'src/ApiService'
 import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
 import { getErrorMessage } from 'src/utils/Utils'
-import PaymentTypes from 'src/utils/PaymentTypes'
 
 const DailyReports = () => {
   const filterStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1))

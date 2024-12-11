@@ -21,9 +21,9 @@ import LoadingBar from 'src/components/LoadingBar'
 import { toast } from 'react-toastify'
 import { AiOutlineBarcode } from 'react-icons/ai'
 import { getErrorMessage, getFormattedDateTimeNow } from 'src/utils/Utils'
-import PaymentTypes from 'src/utils/PaymentTypes'
 import CIcon from '@coreui/icons-react'
 import { cilCash, cilCreditCard } from '@coreui/icons'
+import PaymentTypes from '../../utils/PaymentTypes'
 
 const Sale = () => {
   const [isLoading, setLoading] = useState(false)
