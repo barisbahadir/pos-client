@@ -13,7 +13,7 @@ const AddProduct = React.lazy(() => import('./pages/product/add-product/AddProdu
 
 //REPORTS
 const SaleReports = React.lazy(() => import('./pages/reports/sale-reports/SaleReports'))
-const ZReports = React.lazy(() => import('./pages/reports/z-reports/ZReports'))
+const DailyReports = React.lazy(() => import('./pages/reports/daily-reports/DailyReports'))
 
 // // Core UI
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
@@ -75,7 +75,7 @@ const routes = [
   { path: '/products', name: 'Urunler', element: ProductList },
   { path: '/product/new', name: 'Yeni Urun', element: AddProduct },
   { path: '/reports/sale', name: 'Satış Raporları', element: SaleReports },
-  { path: '/reports/z', name: 'Gün Sonu Raporları', element: ZReports },
+  { path: '/reports/daily', name: 'Günlük Raporlar', element: DailyReports },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },

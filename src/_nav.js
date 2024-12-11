@@ -84,8 +84,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Gün Sonu',
-    to: '/reports/z',
+    name: 'Günlük Raporlar',
+    to: '/reports/daily',
     icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
   },
   /*{

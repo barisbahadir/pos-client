@@ -58,10 +58,6 @@ const SaleReports = () => {
 
   useEffect(() => {
     fetchTransactions()
-  }, [])
-
-  useEffect(() => {
-    fetchTransactions()
   }, [startDate, endDate])
 
   return isLoading ? (
@@ -80,12 +76,14 @@ const SaleReports = () => {
                   <CFormInput
                     type="date"
                     value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
+                    onChange={(e) =>
+                      setStartDate(!e.target.value ? filterStartDate : e.target.value)
+                    }
                   />
                   <CFormInput
                     type="date"
                     value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
+                    onChange={(e) => setEndDate(!e.target.value ? filterEndDate : e.target.value)}
                   />
                 </CInputGroup>
               </CCol>
@@ -113,7 +111,7 @@ const SaleReports = () => {
             <CTable hover>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell>Kayit No</CTableHeaderCell>
+                  <CTableHeaderCell>No</CTableHeaderCell>
                   <CTableHeaderCell>Satış Tarihi</CTableHeaderCell>
                   <CTableHeaderCell>Odeme Tipi</CTableHeaderCell>
                   <CTableHeaderCell>Satış Tutarı</CTableHeaderCell>
@@ -121,10 +119,10 @@ const SaleReports = () => {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {transactions.map((transaction) => (
+                {transactions.map((transaction, index) => (
                   <React.Fragment key={transaction.id}>
                     <CTableRow>
-                      <CTableDataCell>{transaction.id}</CTableDataCell>
+                      <CTableDataCell>{index + 1}</CTableDataCell>
                       <CTableDataCell>{transaction.transactionDate}</CTableDataCell>
                       <CTableDataCell>
                         {transaction.paymentType === PaymentTypes.CARD ? 'Kredi Karti' : 'Nakit'}
