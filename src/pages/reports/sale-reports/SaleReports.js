@@ -25,10 +25,9 @@ import { getErrorMessage } from 'src/utils/Utils'
 import PaymentTypes from '../../../utils/PaymentTypes'
 
 const SaleReports = () => {
-  const filterStartDate = new Date(new Date().setMonth(new Date().getMonth() - 1))
-    .toISOString()
-    .split('T')[0]
+  const filterStartDate = new Date().toISOString().split('T')[0]
   const filterEndDate = new Date().toISOString().split('T')[0]
+  // new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0]
 
   const [isLoading, setLoading] = useState(false)
   const [transactions, setTransactions] = useState([])
