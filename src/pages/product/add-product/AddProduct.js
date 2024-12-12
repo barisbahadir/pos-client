@@ -101,7 +101,7 @@ const AddProduct = () => {
       barcode: data.barcode,
       price: data.price,
       stockQuantity: data.stockQuantity,
-      imageBase64: imageBase64,
+      image: imageBase64,
       category: {
         id: Number(data.category) || 1,
       },
