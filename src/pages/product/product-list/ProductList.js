@@ -298,9 +298,7 @@ const ProductList = () => {
                               color="info"
                               className="info-button"
                               size="sm"
-                              onClick={() =>
-                                console.log(item.id + ' edit button clicked: ' + item.name)
-                              }
+                              onClick={() => navigate(`/product/${item.id}`)}
                             >
                               Düzenle
                             </CButton>

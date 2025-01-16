@@ -27,10 +27,11 @@ import { FaBarcode } from 'react-icons/fa'
 import './AddProduct.css'
 import CIcon from '@coreui/icons-react'
 import { cilTrash } from '@coreui/icons'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const AddProduct = () => {
   const navigate = useNavigate()
+  const { id } = useParams()
 
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -67,7 +68,6 @@ const AddProduct = () => {
         const response = await ApiService.get('/api/category/list')
         if (response != null && response != undefined && Array.isArray(response)) {
           setCategories(response)
-          console.log(response)
         }
       } catch (err) {
         toast.error('Kategori listesi getirilirken bir hata olustu!' + getErrorMessage(err))

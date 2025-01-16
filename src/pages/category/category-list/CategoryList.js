@@ -15,8 +15,11 @@ import apiService from 'src/ApiService'
 import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
 import { getErrorMessage } from 'src/utils/Utils'
+import { useNavigate } from 'react-router-dom'
 
 const CategoryList = () => {
+  const navigate = useNavigate()
+
   const [isLoading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
 
@@ -234,9 +237,7 @@ const CategoryList = () => {
                               color="info"
                               className="info-button"
                               size="sm"
-                              onClick={() =>
-                                console.log(item.id + ' edit button clicked: ' + item.name)
-                              }
+                              onClick={() => navigate(`/category/${item.id}`)}
                             >
                               Düzenle
                             </CButton>

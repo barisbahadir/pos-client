@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CCard,
   CCardBody,
@@ -10,11 +10,7 @@ import {
   CRow,
   CCol,
   CFormFeedback,
-  CFormSelect,
   CContainer,
-  CInputGroupText,
-  CInputGroup,
-  CTooltip,
 } from '@coreui/react'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
@@ -23,16 +19,14 @@ import { toast } from 'react-toastify'
 import { getErrorMessage } from 'src/utils/Utils'
 import ApiService from 'src/ApiService'
 import './AddCategory.css'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const AddCategory = () => {
   const navigate = useNavigate()
+  const { id } = useParams()
 
   const [isLoading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-
-  const [imageBase64, setImageBase64] = useState(null)
-  const [categories, setCategories] = useState([]) // Kategorileri tutan state
 
   // Form validation schema
   const schema = yup.object().shape({
