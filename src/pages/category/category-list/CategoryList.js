@@ -16,12 +16,29 @@ import { toast } from 'react-toastify'
 import LoadingBar from 'src/components/LoadingBar'
 import { getErrorMessage } from 'src/utils/Utils'
 import { useNavigate } from 'react-router-dom'
+import ConfirmationModal from 'src/components/ConfirmationModal'
 
 const CategoryList = () => {
   const navigate = useNavigate()
 
   const [isLoading, setLoading] = useState(false)
   const [categories, setCategories] = useState([])
+
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState(null)
+
+  const showDeleteModal = (category) => {
+    setSelectedCategory(category)
+    setModalVisible(true)
+  }
+
+  const handleDeleteCategory = async () => {
+    if (selectedCategory) {
+      await deleteCategoryById(selectedCategory.id, selectedCategory.name)
+      setModalVisible(false)
+      setSelectedCategory(null)
+    }
+  }
 
   const deleteCategoryById = async (id, name) => {
     try {
@@ -241,11 +258,7 @@ const CategoryList = () => {
                             >
                               Düzenle
                             </CButton>
-                            <CButton
-                              color="danger"
-                              size="sm"
-                              onClick={() => deleteCategoryById(item.id, item.name)}
-                            >
+                            <CButton color="danger" size="sm" onClick={() => showDeleteModal(item)}>
                               Sil
                             </CButton>
                           </div>
@@ -260,6 +273,16 @@ const CategoryList = () => {
           </DragDropContext>
         </CCol>
       </CRow>
+
+      <ConfirmationModal
+        visible={isModalVisible}
+        onConfirm={handleDeleteCategory}
+        onCancel={() => setModalVisible(false)}
+        title="Silme İşlemini Onayla"
+        message={`"${selectedCategory?.name}" adlı kategoriyi silmek istediğinizden emin misiniz?`}
+        confirmText="Sil"
+        cancelText="Vazgeç"
+      />
     </CContainer>
   )
 }

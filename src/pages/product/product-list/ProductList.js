@@ -18,6 +18,7 @@ import LoadingBar from 'src/components/LoadingBar'
 import defaultProduct from 'src/assets/images/product.png'
 import { getErrorMessage } from 'src/utils/Utils'
 import { useNavigate } from 'react-router-dom'
+import ConfirmationModal from 'src/components/ConfirmationModal'
 
 const ProductList = () => {
   const navigate = useNavigate()
@@ -27,6 +28,22 @@ const ProductList = () => {
 
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
+
+  const [isModalVisible, setModalVisible] = useState(false)
+  const [selectedProduct, setSelectedProduct] = useState(null)
+
+  const showDeleteModal = (category) => {
+    setSelectedProduct(category)
+    setModalVisible(true)
+  }
+
+  const handleDeleteProduct = async () => {
+    if (selectedProduct) {
+      await deleteProductById(selectedProduct.id, selectedProduct.name)
+      setModalVisible(false)
+      setSelectedProduct(null)
+    }
+  }
 
   useEffect(() => {
     const filteredData = categories.filter((cat) => cat.id === selectedCategoryId)
@@ -302,11 +319,7 @@ const ProductList = () => {
                             >
                               Düzenle
                             </CButton>
-                            <CButton
-                              color="danger"
-                              size="sm"
-                              onClick={() => deleteProductById(item.id, item.name)}
-                            >
+                            <CButton color="danger" size="sm" onClick={() => showDeleteModal(item)}>
                               Sil
                             </CButton>
                           </div>
@@ -321,6 +334,16 @@ const ProductList = () => {
           </DragDropContext>
         </CCol>
       </CRow>
+
+      <ConfirmationModal
+        visible={isModalVisible}
+        onConfirm={handleDeleteProduct}
+        onCancel={() => setModalVisible(false)}
+        title="Silme İşlemini Onayla"
+        message={`"${selectedProduct?.name}" adlı urunu silmek istediğinizden emin misiniz?`}
+        confirmText="Sil"
+        cancelText="Vazgeç"
+      />
     </CContainer>
   )
 }
