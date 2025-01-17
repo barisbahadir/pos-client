@@ -211,7 +211,7 @@ const Sale = () => {
     try {
       const cardData = {
         paymentType: paymentType,
-        transactionDate: getFormattedDateTimeNow(),
+        // transactionDate: getFormattedDateTimeNow(),
         transactionItems: cart.map((c) => {
           const item = {
             productName: c.name,
